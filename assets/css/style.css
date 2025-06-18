@@ -43438,32 +43438,34 @@ span.select2-selection.select2-selection--single:focus {
   overflow: hidden;
 }
 
-.desktop-video {
-  display: none;
-}
-
+/* Hide both by default */
+.desktop-video,
 .mobile-video {
   display: none;
 }
 
+/* Show desktop video only on desktop */
 @media (min-width: 769px) {
   .desktop-video {
-    display: flex;
+    display: block;
   }
 }
 
+/* Show mobile video only on mobile */
 @media (max-width: 768px) {
   .mobile-video {
-    display: flex;
+    display: block;
   }
 }
 
+/* Optional: make video responsive */
 video {
   width: 100%;
   height: auto;
   max-width: 100%;
 }
 
+/* Limit video size on desktop */
 @media (min-width: 769px) {
   video {
     max-width: 2000px;
