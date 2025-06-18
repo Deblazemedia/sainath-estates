@@ -336,7 +336,7 @@ Contact Area
     <div class="space overflow-hidden contact-area-3 z-index-common" data-bg-src="assets/img/bg/contact-bg-1-1.png"
         data-overlay="title" data-opacity="3">
         <div class="contact-bg-shape3-1 spin shape-mockup " data-bottom="5%" data-left="12%">
-            <img src="assets/img/shape/section_shape_2_1.jpg" alt="img">
+            <img src="assets/img/shape/section_shape_3_2.jpg" alt="img">
         </div>
 
         <div class="container">
@@ -599,7 +599,7 @@ Contact Area
                 const message = document.getElementById("contactMessage2").value.trim();
 
                 try {
-                    const res = await fetch("http://localhost:5000/api/contact", {
+                    const res = await fetch("https://sainath-estate-backend-production.up.railway.app/api/contact", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ name, email, phone, message })

@@ -623,7 +623,7 @@ Property Page Area
             if (!propertyId) return;
 
             try {
-                const res = await fetch(`http://localhost:5000/api/properties/${propertyId}`);
+                const res = await fetch(`https://sainath-estate-backend-production.up.railway.app/api/properties/${propertyId}`);
                 const property = await res.json();
 
                 // 1. Title & Breadcrumb
@@ -778,7 +778,7 @@ Property Page Area
                 const propertyTitle = document.getElementById("propertyTitle")?.textContent?.trim() || "";
 
                 try {
-                    const res = await fetch("http://localhost:5000/api/contact", {
+                    const res = await fetch("https://sainath-estate-backend-production.up.railway.app/api/contact", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({

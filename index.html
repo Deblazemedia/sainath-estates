@@ -1222,13 +1222,29 @@ RSVP Area
             </div>
         </div>
     </div>
-    <div class="video-area-6 overflow-hidden hide-on-mobile">
+    <br>
+    <div class="video-container desktop-video">
+        <video autoplay muted loop playsinline preload="none">
+            <source src="https://deblazemedia.com/wp-content/uploads/2025/06/DLF-Banner-1920-x-1080-px.mp4"
+                type="video/mp4" />
+        </video>
+    </div>
+
+    <div class="video-container mobile-video">
+        <video autoplay muted loop playsinline preload="none">
+            <source src="https://deblazemedia.com/wp-content/uploads/2025/06/DLF-Mobile-banner-600-x-1000-px.mp4"
+                type="video/mp4" />
+        </video>
+    </div>
+    <br>
+    <br>
+    <!-- <div class="video-area-6 overflow-hidden hide-on-mobile">
         <div class="container-fluid p-0">
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <div class="video-wrap6">
                         <img src="assets/img/normal/video_6_1.png" alt="img">
-                        <a href="https://www.youtube.com/watch?v=4jnzf1yj48M"
+                        <a href="https://deblazemedia.com/wp-content/uploads/2025/06/DLF-Banner-1920-x-1080-px.mp4"
                             class="video-btn popup-video justify-content-lg-start justify-content-center">
                             <span class="play-btn style6"><i class="fa-sharp fal fa-play"></i></span>
                             <div class="circle-tag">
@@ -1237,12 +1253,12 @@ RSVP Area
                                 </div>
                             </div>
                         </a>
-                        <!-- <div class="video-text">Watch Video</div> -->
+                        <div class="video-text">Watch Video</div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!--==============================
 Why choose Us Area  
 ==============================-->
@@ -1941,7 +1957,7 @@ Contact Area
 
     <div class="space-reducer"></div>
     <div class="space">
-        <div class="container">
+        <div class="container" id="contact-sec">
             <div class="title-area text-center">
                 <span class="sub-title">Get In Touch</span>
                 <h2 class="sec-title text-theme">Our Contact Information</h2>
@@ -1967,9 +1983,8 @@ Contact Area
                         </div>
                         <div class="about-contact-details">
                             <h6 class="about-contact-details-title">Phone Number</h6>
-                            <p class="about-contact-details-text"><a href="tel:01234567890">+91 98205 64265</a></p>
-
-                            <p class="about-contact-details-text"><a href="tel:01234567890">+91 9920225558</a></p>
+                            <p class="about-contact-details-text"><a href="tel:+91 9820564265">+91 98205 64265 </a></p>
+                            <p class="about-contact-details-text"><a href="tel:+91 9920040440">+91 99200 40440</a></p>
 
                         </div>
                     </div>
@@ -1981,10 +1996,9 @@ Contact Area
                         </div>
                         <div class="about-contact-details">
                             <h6 class="about-contact-details-title">Email Address</h6>
+                            <p class="about-contact-details-text"><a href="javascript:void(0)">Contact Email</a></p>
                             <p class="about-contact-details-text"><a
-                                    href="mailto:info@sainathestate.com">info@sainathestate.com</a></p>
-                            <p class="about-contact-details-text"><a
-                                    href="mailto:support@sainathestatecom">support@sainathestatecom</a></p>
+                                    href="mailto:support@sainathestatecom">bunty@sainathestate.com</a></p>
                         </div>
                     </div>
                 </div>
@@ -1992,7 +2006,7 @@ Contact Area
         </div>
     </div>
     <div class="space overflow-hidden contact-area-3 z-index-common" data-bg-src="assets/img/bg/contact-bg-1-1.png"
-        data-overlay="title" data-opacity="3" id="contact-sec">
+        data-overlay="title" data-opacity="3">
         <div class="contact-bg-shape3-1 spin shape-mockup " data-bottom="5%" data-left="12%">
             <img src="assets/img/shape/section_shape_3_2.jpg" alt="img">
         </div>
@@ -2002,45 +2016,39 @@ Contact Area
                 <div class="col-lg-6">
                     <div class="appointment-wrap2 bg-white me-xxl-5">
                         <h2 class="form-title ">Get in Touch Today</h2>
-                        <form action="mail.php" method="POST" class="appointment-form ajax-contact">
+                        <form id="contactFormAPI" class="appointment-form ajax-contact">
                             <div class="row">
                                 <div class="form-group style-border style-radius col-12">
-                                    <input type="text" class="form-control" name="name" id="name"
-                                        placeholder="Your Name*">
+                                    <input type="text" class="form-control" id="contactName2" placeholder="Your Name*"
+                                        required>
                                     <i class="fal fa-user"></i>
                                 </div>
                                 <div class="form-group style-border style-radius col-12">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="Your Email*">
+                                    <input type="email" class="form-control" id="contactEmail2"
+                                        placeholder="Your Email*" required>
                                     <i class="fal fa-envelope"></i>
                                 </div>
-                                <!-- <div class="form-group style-border style-radius col-md-12">
-                                    <select name="subject" id="subject" class="form-select">
-                                        <option value="" disabled selected hidden>Select Service Type</option>
-                                        <option value="Real Estate">Real Estate</option>
-                                        <option value="Apartment">Apartment</option>
-                                        <option value="Residencial">Residencial</option>
-                                        <option value="Deluxe">Deluxe</option>
-                                    </select>
-                                    <i class="fal fa-angle-down"></i>
-                                </div> -->
                                 <div class="form-group style-border style-radius col-12">
-                                    <input type="tel" class="form-control" name="phone" id="phone"
-                                        placeholder="Your Phone Number*" >
+                                    <input type="tel" class="form-control" id="contactPhone2"
+                                        placeholder="Your Phone Number*" required>
                                     <i class="fal fa-phone"></i>
                                 </div>
-
                                 <div class="col-12 form-group style-border style-radius">
                                     <i class="far fa-comments"></i>
-                                    <textarea placeholder="Type Your Message" class="form-control"></textarea>
+                                    <textarea id="contactMessage2" placeholder="Type Your Message" required
+                                        class="form-control"></textarea>
                                 </div>
                                 <div class="col-12 form-btn mt-4">
-                                    <button class="th-btn">Submit Message <span class="btn-icon"><img
-                                                src="assets/img/icon/paper-plane.svg" alt="img"></span></button>
+                                    <button id="submitBtn2" type="submit" class="th-btn">Submit Message
+                                        <span class="btn-icon">
+                                            <img src="assets/img/icon/paper-plane.svg" alt="img">
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
-                            <p class="form-messages mb-0 mt-3"></p>
+                            <p id="formMessage2" class="form-messages mb-0 mt-3" style="color: #B59410;"></p>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -2341,7 +2349,7 @@ Contact Area
             btn.disabled = true;
 
             try {
-                const res = await fetch("http://localhost:5000/api/newsletter", {
+                const res = await fetch("https://sainath-estate-backend-production.up.railway.app/api/newsletter", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email })
@@ -2365,7 +2373,53 @@ Contact Area
             }
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("contactFormAPI");
+            const submitBtn = document.getElementById("submitBtn2");
+            const messageBox = document.getElementById("formMessage2");
 
+            form.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                submitBtn.textContent = "Submitting...";
+                submitBtn.disabled = true;
+                messageBox.textContent = "";
+
+                const name = document.getElementById("contactName2").value.trim();
+                const email = document.getElementById("contactEmail2").value.trim();
+                const phone = document.getElementById("contactPhone2").value.trim();
+                const message = document.getElementById("contactMessage2").value.trim();
+
+                try {
+                    const res = await fetch("https://sainath-estate-backend-production.up.railway.app/api/contact", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ name, email, phone, message })
+                    });
+
+                    if (res.ok) {
+                        form.reset();
+                        messageBox.textContent = "Submitted successfully!";
+                        submitBtn.textContent = "Thanks for contacting";
+
+                        setTimeout(() => {
+                            submitBtn.textContent = "Submit Message";
+                            messageBox.textContent = "";
+                        }, 2000);
+                    } else {
+                        messageBox.textContent = "Failed to submit. Try again.";
+                        submitBtn.textContent = "Submit Message";
+                    }
+                } catch (err) {
+                    messageBox.textContent = "An error occurred.";
+                    submitBtn.textContent = "Submit Message";
+                }
+
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
 
 </body>
 
