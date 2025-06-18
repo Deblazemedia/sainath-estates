@@ -43433,12 +43433,11 @@ span.select2-selection.select2-selection--single:focus {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: auto;
   background: #000;
   overflow: hidden;
 }
 
-/* Hide both by default */
+/* Hide both videos by default */
 .desktop-video,
 .mobile-video {
   display: none;
@@ -43458,17 +43457,17 @@ span.select2-selection.select2-selection--single:focus {
   }
 }
 
-/* Optional: make video responsive */
+/* Make video responsive */
 video {
   width: 100%;
   height: auto;
   max-width: 100%;
 }
 
-/* Limit video size on desktop */
+/* Optional: restrict max size for desktop video */
 @media (min-width: 769px) {
   video {
-    max-width: 2000px;
-    max-height: 900px;
+    max-width: 1920px;
+    max-height: 1080px;
   }
 }
