@@ -43421,3 +43421,9 @@ span.select2-selection.select2-selection--single:focus {
   }
 }
 
+.rent-card {
+    background: #111;
+    border-radius: 16px;
+    text-align: center;
+    padding: 40px;
+}
