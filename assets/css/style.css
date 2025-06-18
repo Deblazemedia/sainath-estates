@@ -26059,7 +26059,7 @@ span.select2-selection.select2-selection--single:focus {
   margin-bottom: 38px;
 }
 
-.rent-card .box-icon:hover{
+.rent-card .box-icon:hover {
   background: #d3a258;
 }
 
@@ -43422,8 +43422,8 @@ span.select2-selection.select2-selection--single:focus {
 }
 
 .rent-card {
-    background: #111;
-    border-radius: 16px;
-    text-align: center;
-    padding: 40px;
+  background: #111;
+  border-radius: 16px;
+  text-align: center;
+  padding: 40px;
 }
