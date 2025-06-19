@@ -6117,7 +6117,7 @@ hr.title-line {
 }
 
 .bg-gray {
-  background-color: #fff !important;
+  background-color: #D3A258 !important;
 }
 
 .bg-gray2 {
@@ -9226,7 +9226,7 @@ ol.wp-block-rss {
 
 .footer-widget .widget_title {
   max-width: 270px;
-  color: var(--white-color);
+  color: #D3A258;
   font-weight: 600;
   font-size: 24px;
   font-family: var(--body-font);
@@ -11837,7 +11837,7 @@ ol.wp-block-rss {
 
 .footer-layout2 .widget .th-social a:hover {
   background: #d3a258;
-  color: var(--white-color);
+  color: #111;
 }
 
 .footer-layout2 .th-widget-contact .info-box_text .icon img {
@@ -12015,7 +12015,7 @@ ol.wp-block-rss {
 
 .footer-layout2-1 .widget .th-social a:hover {
   background: var(--theme-color);
-  color: var(--white-color);
+  color: #111;
 }
 
 .footer-layout2-1 .th-widget-contact .info-box_text .icon img {
