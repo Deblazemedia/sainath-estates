@@ -32,19 +32,42 @@
     /*
 
   /*---------- 01. On Load Function ----------*/
-    $(window).on("load", function () {
-        $(".preloader").fadeOut();
-    });
+    // $(window).on("load", function () {
+    //     $(".preloader").fadeOut();
+    // });
 
     /*---------- 02. Preloader ----------*/
-    if ($(".preloader").length > 0) {
-        $(".preloaderCls").each(function () {
-            $(this).on("click", function (e) {
-                e.preventDefault();
-                $(".preloader").css("display", "none");
+    // if ($(".preloader").length > 0) {
+    //     $(".preloaderCls").each(function () {
+    //         $(this).on("click", function (e) {
+    //             e.preventDefault();
+    //             $(".preloader").css("display", "none");
+    //         });
+    //     });
+    // }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const preloader = document.querySelector(".preloader");
+        const preloaderCloseBtns = document.querySelectorAll(".preloaderCls");
+
+        if (preloader) {
+            // Attach click handler to all .preloaderCls buttons
+            preloaderCloseBtns.forEach(btn => {
+                btn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    preloader.style.display = "none";
+                });
             });
-        });
-    }
+        }
+    });
+
+    window.addEventListener("load", function () {
+        const preloader = document.querySelector(".preloader");
+        if (preloader) {
+            preloader.style.display = "none";
+        }
+    });
+
 
     /*---------- 03. Mobile Menu ----------*/
     $.fn.thmobilemenu = function (options) {
