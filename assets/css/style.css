@@ -43471,3 +43471,9 @@ video {
     max-height: 1080px;
   }
 }
+
+
+.footer-address:hover>p {
+  color: #D3A258;
+  /* optional for hover effect */
+}
