@@ -4163,7 +4163,7 @@ textarea.is-invalid {
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
   position: relative;
-  color: var(--white-color);
+  color: #000;
 }
 
 .th-btn .btn-icon {
@@ -5444,6 +5444,7 @@ textarea.is-invalid {
 
 .title-area .sec-title {
   margin-bottom: 9px;
+  color: white;
 }
 
 .title-area.text-center .sub-title:before,
@@ -5498,7 +5499,7 @@ hr.title-line {
 }
 
 .shadow-title.style2 {
-  -webkit-text-stroke: 1px rgba(28, 45, 55, 0.15);
+  color: white;
 }
 
 @media (max-width: 1299px) {
@@ -6329,7 +6330,9 @@ hr.title-line {
 }
 
 .text-title {
-  color: var(--title-color) !important;
+
+  color: #d1d1d1;
+
 }
 
 .text-title-dark {
@@ -23445,8 +23448,8 @@ span.select2-selection.select2-selection--single:focus {
 
 .video-box1 {
   position: relative;
-  width: 50%;
-  /* Medium devices */
+  width:
+    /* Medium devices */
 }
 
 .video-box1 img {
@@ -24893,7 +24896,7 @@ span.select2-selection.select2-selection--single:focus {
 }
 
 .property-card2 .property-card-price {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   color: #d1d1d1;
   margin-bottom: 11px;
@@ -32742,7 +32745,7 @@ span.select2-selection.select2-selection--single:focus {
 }
 
 .property-card7 .property-card-price {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--white-color);
   margin-bottom: 11px;
@@ -43476,4 +43479,292 @@ video {
 .footer-address:hover>p {
   color: #D3A258;
   /* optional for hover effect */
+}
+
+
+/* Popup*/
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  /* semi-dark background */
+  backdrop-filter: blur(8px);
+  /* ⬅️ this creates the blur */
+  -webkit-backdrop-filter: blur(8px);
+  /* for Safari support */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 10px;
+}
+
+.popup {
+  background: #000000;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.popup-form {
+  flex: 1 1 320px;
+  padding: 40px;
+}
+
+.popup-img {
+  flex: 1 1 320px;
+  background: url('https://deblazemedia.com/wp-content/uploads/2025/06/luxurzy-apartment.jpg') center/cover no-repeat;
+  min-height: 300px;
+}
+
+.popup h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 32px;
+  color: #fff;
+}
+
+.popup p {
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+  color: #d1d1d1;
+  line-height: 26px;
+}
+
+.popup input {
+  width: 100%;
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  background: transparent;
+  color: #fff;
+  height: 44px;
+  font-family: 'Inter', sans-serif;
+}
+
+.popup input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+}
+
+
+.popup .submit {
+  width: 100%;
+  background: #d3a258;
+  border: none;
+  padding: 18px 24px;
+  color: #000;
+  font-weight: 500;
+  border-radius: 120px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  line-height: 16px;
+  margin-top: 10px;
+}
+
+.popup .submit:hover {
+  background: #B28A3F;
+  border: none;
+  padding: 18px 24px;
+  color: #000;
+  font-weight: 500;
+  border-radius: 120px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  line-height: 16px;
+}
+
+
+.popup .close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  color: #d1d1d1;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s ease-in-out;
+  border: none;
+  outline: none;
+  width: 36px;
+  height: 36px;
+  z-index: 2;
+  border-radius: 50%;
+  /* optional for cleaner shape */
+}
+
+.popup .close:hover {
+  color: #fff;
+  transform: scale(1.2);
+  /* scale up on hover */
+  background: rgba(255, 255, 255, 0.05);
+  /* optional subtle hover effect */
+}
+
+
+
+@media (max-width: 600px) {
+  .popup {
+    flex-direction: column;
+
+  }
+
+  .popup-img {
+    order: -1;
+    width: 100%;
+    height: 200px;
+    display: none;
+  }
+
+  .popup-form {
+    padding: 20px;
+  }
+
+  .popup .close {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    font-size: 28px;
+  }
+
+  .popup .submit {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+@keyframes fadeInPopup {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-overlay.show {
+  display: flex !important;
+  animation: fadeInPopup 0.4s ease-out;
+}
+
+.popup-form form>* {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.popup-form form>*:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.popup-form form>*:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.popup-form form>*:nth-child(4) {
+  animation-delay: 0.5s;
+}
+
+.popup-form form>*:nth-child(5) {
+  animation-delay: 0.6s;
+}
+
+.popup-form form>*:nth-child(6) {
+  animation-delay: 0.7s;
+}
+
+@media (min-width: 1200px) {
+  #propertySliderWrapper {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  #propertySliderWrapper .swiper-slide {
+    width: 25%;
+    flex: 0 0 25%;
+  }
+
+  .property-swiper {
+    width: 100%;
+    max-width: 2000px;
+    margin: 0 auto;
+  }
+
+  .property-slider2 {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .property-page-single .location-map .location-map-address {
+    display: none;
+  }
+}
+
+.property-description br {
+  display: block;
+  content: "";
+  margin-top: 1.5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  padding-bottom: 18px;
+}
+
+.share-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.share-btn img {
+  width: 30px;
+  height: 30px;
 }

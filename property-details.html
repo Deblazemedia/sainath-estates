@@ -144,14 +144,14 @@
 ============================== -->
     <div class="sidemenu-wrapper sidemenu-info d-none d-lg-block ">
         <div class="sidemenu-content">
-            <button class="closeButton sideMenuCls"><i class="far fa-times"></i></button>
+            <button class="closeButton sideMenuCls"><i class="fa-solid fa-xmark"></i></button>
             <div class="widget  ">
                 <div class="th-widget-about">
                     <div class="about-logo">
-                        <a href="index.html"><img src="assets/img/logo.svg" alt="Sainath Estate"></a>
+                        <a href="index.html"><img src="assets/img/logo_2.png" alt="Sainath Estate"></a>
                     </div>
-                    <p class="about-text"> Rapidiously myocardinate cross-platform intellectual capital model.
-                        Appropriately create interactive infrastructures</p>
+                    <p class="about-text"> Sainath Estate, a trusted real estate agent in Andheri West, Mumbai, offers
+                        expert services in buying, selling, and renting properties.</p>
                 </div>
             </div>
             <div class="widget  ">
@@ -169,8 +169,10 @@
                             <img src="assets/img/icon/phone.svg" alt="img">
                         </div>
                         <div class="details">
-                            <p><a href="tel:+0123456789" class="info-box_link">+01 234 567 890</a></p>
-                            <p><a href="tel:+09876543210" class="info-box_link">+09 876 543 210</a></p>
+                            <p><a href="tel:+91 98205 64265" class="info-box_link">+91 98205 64265</a>
+                            </p>
+                            <p><a href="tel:+91 99200 40440" class="info-box_link">+91 99200 40440</a>
+                            </p>
                         </div>
                     </div>
                     <div class="info-box_text">
@@ -178,29 +180,27 @@
                             <img src="assets/img/icon/envelope.svg" alt="img">
                         </div>
                         <div class="details">
-                            <p><a href="mailto:info@sainathestate.com" class="info-box_link">mailinfo00@Sainath
-                                    Estate.com</a>
-                            </p>
-                            <p><a href="mailto:support@sainathestatecom" class="info-box_link">support24@Sainath
-                                    Estate.com</a></p>
+                            <p><a href="javascript:void(0)" class="info-box_link">Contact Email</a></p>
+                            <p><a href="mailto:bunty@sainathestate.com"
+                                    class="info-box_link">bunty@sainathestate.com</a></p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="widget newsletter-widget  ">
                 <h3 class="widget_title">Subscribe Now</h3>
-                <form class="newsletter-form">
+                <!-- <form class="newsletter-form">
                     <div class="form-group">
                         <input class="form-control" type="email" placeholder="Email Address" required="">
                         <button type="submit" class="th-btn"><i class="far fa-paper-plane text-theme"></i></button>
                     </div>
-                </form>
+                </form> -->
                 <div class="th-social style2">
                     <a href="https://www.facebook.com/sainathestates"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/sainathestate/"><i class="fab fa-instagram"></i></a>
+                    <!-- <a href="https://www.linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
                     <a href="https://www.behance.com/"><i class="fab fa-behance"></i></a>
-                    <a href="https://www.vimeo.com/"><i class="fab fa-vimeo-v"></i></a>
+                    <a href="https://www.vimeo.com/"><i class="fab fa-vimeo-v"></i></a> -->
                 </div>
             </div>
         </div>
@@ -236,6 +236,16 @@
                                             Properties
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="index.html#services-id">
+                                            Services
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="gallery.html">
+                                            Gallery
+                                        </a>
+                                    </li>
                                     <li><a href="contact.html#contact-sec">
                                             Contact Us
                                         </a></li>
@@ -252,6 +262,11 @@
                         <div class="col-auto d-none d-xxl-block">
                             <div class="header-button">
                                 <a href="contact.html#contact-sec" class="th-btn style5 th-btn-icon">Enquire Now</a>
+                                <button type="button" class="simple-icon sideMenuInfo sidebar-btn style2">
+                                    <span class="line"></span>
+                                    <span class="line"></span>
+                                    <span class="line"></span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -270,7 +285,7 @@
                         <!-- Title -->
                         <h1 class="breadcumb-title" id="breadcrumbTitle"></h1>
                         <ul class="breadcumb-menu">
-                            <li><a href="property.html">Property</a></li>
+                            <li><a href="property.html">Properties</a></li>
                             <!-- Title -->
                             <li id="breadcrumbSubtitle">
                             </li>
@@ -298,14 +313,16 @@ Property Page Area
                     <!-- Property Banner Thumbnail Slider -->
                     <div class="swiper th-slider property-thumb-slider"
                         data-slider-options='{"effect":"slide","loop":true,"breakpoints":{"0":{"slidesPerView":2},"576":{"slidesPerView":"2"},"768":{"slidesPerView":"3"},"992":{"slidesPerView":"3"},"1200":{"slidesPerView":"4"}},"autoplayDisableOnInteraction":"true"}'>
-                        <div class="swiper-wrapper" id="thumbBannerSlider">
+                        <div class="swiper-wrapper" id="thumbBannerSlider" style="display: none;">
 
                         </div>
                     </div>
-                    <button data-slider-prev="#propertySlider" class="slider-arrow style3 slider-prev"><img
-                            src="assets/img/icon/arrow-left.svg" alt="icon"></button>
-                    <button data-slider-next="#propertySlider" class="slider-arrow style3 slider-next"><img
-                            src="assets/img/icon/arrow-right.svg" alt="icon"></button>
+                    <div style="display: none;">
+                        <button data-slider-prev="#propertySlider" class="slider-arrow style3 slider-prev"><img
+                                src="assets/img/icon/arrow-left.svg" alt="icon"></button>
+                        <button data-slider-next="#propertySlider" class="slider-arrow style3 slider-next"><img
+                                src="assets/img/icon/arrow-right.svg" alt="icon"></button>
+                    </div>
                 </div>
                 <div class="row gx-30">
                     <div class="col-xxl-8 col-lg-7">
@@ -322,14 +339,21 @@ Property Page Area
                                     <!-- <a href="javascript:void(0)"><img src="assets/img/icon/comments.svg" alt="img">32
                                         Comments</a> -->
                                 </div>
-                                <h2 class="page-title">About This Property</h2>
+                                <div class="section-header">
+                                    <h2 class="page-title">About This Property</h2>
+                                    <button class="share-btn" onclick="shareProperty()">
+                                        <img src="https://deblazemedia.com/wp-content/uploads/2025/06/share-icon.png"
+                                            alt="Share" />
+                                    </button>
+                                </div>
+
                                 <!-- Dynamic Property Title -->
                                 <h5 class="page-title-2" id="propertyTitle"></h5>
 
                                 <!-- Dynamic Property Description -->
                                 <p class="mb-30" id="propertyDescription"></p>
 
-                                <h3 class="page-title mt-50 mb-30">From Our Gallery</h3>
+                                <!-- <h3 class="page-title mt-50 mb-30">From Our Gallery</h3> -->
                                 <div class="row gy-4">
                                     <div class="col-xl-12">
                                         <div class="property-gallery-card gallery-item-template d-none">
@@ -348,7 +372,7 @@ Property Page Area
                                     </div>
                                     <!-- here it will come more -->
                                 </div>
-                                <h3 class="page-title mt-50 mb-25">Features & amenities</h3>
+                                <!-- <h3 class="page-title mt-50 mb-25">Features & amenities</h3> -->
                                 <div class="row gy-3" id="amenitiesContainer">
                                     <!-- Dynamic amenity columns will be inserted here -->
                                 </div>
@@ -374,11 +398,12 @@ Property Page Area
                                         <div class="media-body">
                                             <h4 class="title">Address:</h4>
                                             <p class="text" id="propertyAddress">Loading...</p>
-                                            <h4 class="title">Post Code:</h4>
-                                            <p class="text" id="propertyPincode">Loading...</p>
+                                            <h4 class="title" style="display:none;">Post Code:</h4>
+                                            <p class="text" style="display:none;" id="propertyPincode">Loading...</p>
                                         </div>
                                     </div>
                                 </div>
+                                <br>
                                 <h3 class="page-title mt-50 mb-30">Property Video</h3>
                                 <div class="video-box2 mb-30" id="propertyVideoSection">
                                     <img id="videoThumbnail" src="" alt="img">
@@ -416,7 +441,8 @@ Property Page Area
                                     </div>
                                     <button id="submitBtn" type="submit"
                                         class="th-btn style-white th-btn-icon mt-15">Request Details</button>
-                                    <p id="formMessage" style="margin-top: 10px; color: #F3E1CD; font-size: 14px;"></p>
+                                    <p id="formMessage" style="margin-top: 10px; color: #F3E1CD; font-size: 14px;">
+                                    </p>
                                 </form>
 
 
@@ -427,7 +453,8 @@ Property Page Area
                                     <div class="logo"><img src="assets/img/logo_2.png" alt="img"></div>
                                     <h4 class="subtitle">You Get Online support</h4>
                                     <h5 class="link"><a href="tel:256214203215">+91 99200 40440</a></h5>
-                                    <a href="contact.html#contact-sec" class="th-btn style-border th-btn-icon">Contact Now</a>
+                                    <a href="contact.html#contact-sec" class="th-btn style-border th-btn-icon">Contact
+                                        Now</a>
                                 </div>
                             </div>
                         </aside>
@@ -437,6 +464,7 @@ Property Page Area
         </section>
     </div>
     <div class="space-reducer"></div>
+
     <!--==============================
 	Footer Area
 ==============================-->
@@ -468,7 +496,7 @@ Property Page Area
                                     <div class="th-social style5">
                                         <a href="https://www.facebook.com/sainathestates"><i
                                                 class="fab fa-facebook-f"></i></a>
-                                        <!-- <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+                                        <!--<a href="https://www.instagram.com/sainathestate/"><i class="fab fa-instagram"></i></a>
                                         <a href="https://www.linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
                                         <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a> -->
                                         <a href="https://www.instagram.com/sainathestate/"><i
@@ -483,7 +511,7 @@ Property Page Area
                                 <div class="th-widget-contact">
                                     <div class="info-box_text">
                                         <div class="icon"><img src="assets/img/icon/location-dot.svg" alt="img"></div>
-                                       <div class="details">
+                                        <div class="details">
                                             <a href="https://maps.app.goo.gl/VyBYfGPEAMZ8eCXy7" class="footer-address">
                                                 <p>Shop No. 2, Evershine Embassy CHS Ltd, Veera Desai Road, Andheri
                                                     West,
@@ -613,7 +641,7 @@ Property Page Area
     <!-- 360 degree Js -->
     <script src="assets/js/threesixty.min.js"></script>
     <script src="assets/js/panolens.min.js"></script>
-    
+
 
 
 
@@ -656,30 +684,32 @@ Property Page Area
                 const subtitle = `For ${listingType.charAt(0).toUpperCase() + listingType.slice(1)}`;
                 document.querySelector('.widget_subtitle').textContent = subtitle;
 
-                const priceText = listingType === 'rent'
-                    ? `₹${property.price.toLocaleString('en-IN')} /mon`
-                    : `₹${property.price.toLocaleString('en-IN')}`;
-                document.getElementById('propertyPrice').textContent = priceText;
+                // ✅ Use formattedPrice from backend or fallback
+                const rawPrice = property.price?.toLocaleString('en-IN') || '';
+                const formattedPrice = property.formattedPrice || `₹${rawPrice}`;
+                const priceTextHTML = listingType === 'rent'
+                    ? `${formattedPrice} <span style="font-weight: normal;">(₹${rawPrice} /mon)</span>`
+                    : `${formattedPrice} <span style="font-weight: normal; font-size: 18px;">(₹${rawPrice})</span>`;
+                document.getElementById('propertyPrice').innerHTML = priceTextHTML;
 
-                // 3. Property Banner Images
+
                 // 3. Property Banner Images
                 const mainBanner = document.getElementById('mainBannerSlider');
                 const thumbBanner = document.getElementById('thumbBannerSlider');
 
-                // Inject banner images
                 property.propertyBanner?.forEach(img => {
                     mainBanner.innerHTML += `
-        <div class="swiper-slide">
-            <div class="property-slider-img">
-                <img src="http://localhost:5000/uploads/${img}" alt="banner">
-            </div>
-        </div>`;
+                    <div class="swiper-slide">
+                        <div class="property-slider-img">
+                            <img src="https://sainath-estate-backend-production.up.railway.app/uploads/${img}" alt="banner">
+                        </div>
+                    </div>`;
                     thumbBanner.innerHTML += `
-        <div class="swiper-slide">
-            <div class="property-slider-img">
-                <img src="http://localhost:5000/uploads/${img}" alt="thumb">
-            </div>
-        </div>`;
+                    <div class="swiper-slide">
+                        <div class="property-slider-img">
+                            <img src="https://sainath-estate-backend-production.up.railway.app/uploads/${img}" alt="thumb">
+                        </div>
+                    </div>`;
                 });
 
                 // ✅ Initialize thumbnail slider first
@@ -706,15 +736,14 @@ Property Page Area
                     }
                 });
 
-
-                // 4. Gallery Section (2-column layout)
+                // 4. Gallery Section
                 const galleryContainer = document.getElementById('propertyGalleryContainer');
                 const galleryTemplate = document.querySelector('.gallery-item-template');
                 property.gallery?.forEach(img => {
                     const clone = galleryTemplate.cloneNode(true);
                     clone.classList.remove('d-none', 'gallery-item-template');
-                    clone.querySelector('img').src = `http://localhost:5000/uploads/${img}`;
-                    clone.querySelector('a').href = `http://localhost:5000/uploads/${img}`;
+                    clone.querySelector('img').src = `https://sainath-estate-backend-production.up.railway.app/uploads/${img}`;
+                    clone.querySelector('a').href = `https://sainath-estate-backend-production.up.railway.app/uploads/${img}`;
 
                     const col = document.createElement('div');
                     col.className = 'col-md-6';
@@ -735,16 +764,16 @@ Property Page Area
 
                 // 6. Location Info
                 document.getElementById('propertyAddress').textContent = property.location;
-                document.getElementById('propertyPincode').textContent = "400001"; // optional
+                document.getElementById('propertyPincode').textContent = "400001";
                 document.getElementById('locationThumbnail').src =
-                    `http://localhost:5000/uploads/${property.slider_image || property.gallery?.[0] || 'default.jpg'}`;
+                    `https://sainath-estate-backend-production.up.railway.app/uploads/${property.slider_image || property.gallery?.[0] || 'default.jpg'}`;
                 document.getElementById('propertyMapIframe').src =
                     `https://maps.google.com/maps?q=${encodeURIComponent(property.location)}&output=embed`;
 
-                // 7. Property Video (optional)
+                // 7. Property Video
                 const videoContainer = document.getElementById('propertyVideoSection');
                 if (property.videos?.length) {
-                    document.getElementById('videoThumbnail').src = `http://localhost:5000/uploads/${property.slider_image || property.gallery?.[0]}`;
+                    document.getElementById('videoThumbnail').src = `https://sainath-estate-backend-production.up.railway.app/uploads/${property.slider_image || property.gallery?.[0]}`;
                     document.getElementById('videoLink').href = property.videos[0];
                 } else {
                     videoContainer.style.display = "none";
@@ -755,6 +784,7 @@ Property Page Area
             }
         });
     </script>
+
 
 
     <script>
@@ -817,6 +847,24 @@ Property Page Area
             });
         });
     </script>
+    <script>
+        function shareProperty() {
+            const shareData = {
+                title: 'Check out this Property',
+                text: 'Explore this amazing property listed on Sainath Estate!',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log('Property shared successfully'))
+                    .catch(err => console.error('Share failed:', err));
+            } else {
+                alert("Sharing is not supported in this browser.");
+            }
+        }
+    </script>
+
 
 </body>
 

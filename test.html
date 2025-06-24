@@ -39,8 +39,8 @@
         }
 
         .popup {
-            background: #fff;
-            max-width: 800px;
+            background: #000000;
+            max-width: 900px;
             width: 100%;
             display: flex;
             flex-wrap: wrap;
@@ -50,12 +50,12 @@
         }
 
         .popup-form {
-            flex: 1 1 300px;
-            padding: 30px;
+            flex: 1 1 320px;
+            padding: 40px;
         }
 
         .popup-img {
-            flex: 1 1 300px;
+            flex: 1 1 320px;
             background: url('https://deblazemedia.com/wp-content/uploads/2025/06/luxurzy-apartment.jpg') center/cover no-repeat;
             min-height: 300px;
         }
@@ -65,65 +65,124 @@
             font-size: 1.6rem;
             font-weight: 600;
             margin-bottom: 10px;
+            line-height: 32px;
+            color: #fff;
         }
 
         .popup p {
             font-size: 0.95rem;
             margin-bottom: 15px;
-            color: #444;
+            color: #d1d1d1;
+            line-height: 26px;
         }
 
         .popup input {
             width: 100%;
-            padding: 10px;
+            padding: 10px 20px;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            background: transparent;
+            color: #fff;
+            height: 44px;
             font-family: 'Inter', sans-serif;
         }
 
-        .popup button {
-            background: #f77b7b;
+        .popup input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+
+        .popup .submit {
+            width: 100%;
+            background: #d3a258;
             border: none;
-            padding: 12px 20px;
-            color: white;
-            font-weight: bold;
-            border-radius: 6px;
+            padding: 18px 24px;
+            color: #000;
+            font-weight: 500;
+            border-radius: 120px;
             cursor: pointer;
             font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            line-height: 16px;
+            margin-top: 10px;
         }
+
+        .popup .submit:hover {
+            background: #B28A3F;
+            border: none;
+            padding: 18px 24px;
+            color: #000;
+            font-weight: 500;
+            border-radius: 120px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            line-height: 16px;
+        }
+
 
         .popup .close {
             position: absolute;
             top: 12px;
             right: 12px;
-            background: rgba(0, 0, 0, 0.08);
-            color: #222;
-            width: 30px;
-            height: 30px;
-            border: none;
-            border-radius: 50%;
-            font-size: 18px;
+            background: transparent;
+            color: #d1d1d1;
+            font-size: 24px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: all 0.25s ease-in-out;
+            border: none;
+            outline: none;
+            width: 36px;
+            height: 36px;
+            z-index: 2;
+            border-radius: 50%;
+            /* optional for cleaner shape */
         }
+
+        .popup .close:hover {
+            color: #fff;
+            transform: scale(1.2);
+            /* scale up on hover */
+            background: rgba(255, 255, 255, 0.05);
+            /* optional subtle hover effect */
+        }
+
+
 
         @media (max-width: 600px) {
             .popup {
                 flex-direction: column;
+
             }
 
             .popup-img {
                 order: -1;
                 width: 100%;
                 height: 200px;
-                display: block;
+                display: none;
             }
 
             .popup-form {
                 padding: 20px;
+            }
+
+            .popup .close {
+                position: absolute;
+                top: 6px;
+                right: 12px;
+                font-size: 28px;
+            }
+
+            .popup .submit {
+                margin-top: 10px;
+                margin-bottom: 20px;
             }
         }
 
@@ -191,7 +250,9 @@
     <div class="popup-overlay" id="popup">
         <div class="popup">
             <button class="close" onclick="closePopup()">×</button>
+            <div class="popup-img"></div>
             <div class="popup-form">
+                <br>
                 <h2>Be the First to Know About New Properties in Your Area</h2>
                 <p>Stay updated with the latest listings, price drops, investment tips, and neighborhood
                     insights—delivered straight to your inbox.</p>
@@ -199,64 +260,96 @@
                     <input type="text" placeholder="Name*" id="name" required />
                     <input type="email" placeholder="Email*" id="email" required />
                     <input type="tel" placeholder="Phone" id="phone" />
-                    <input type="text" placeholder="Postcode" id="postcode" />
-                    <label style="font-size: 0.8rem; display: block; margin-bottom: 10px;">Your information stays safe
+                    <input type="text" placeholder="Pincode" id="pincode" />
+                    <label
+                        style="color: #f0f0f0; font-size: 0.8rem; display: block; margin-bottom: 10px; line-height: 20px;">Your
+                        information stays safe
                         with us. Submitting means you're okay with occasional real estate emails.</label>
-                    <button type="submit">Get Property Updates</button>
+                    <button type="submit" class="submit">Get Property Updates</button>
                 </form>
             </div>
-            <div class="popup-img"></div>
         </div>
     </div>
 
     <script>
         const popup = document.getElementById('popup');
         const form = document.getElementById('newsletterForm');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        let reappearTimeout;
 
-        function closePopup() {
-            popup.style.display = 'none';
-        }
-
+        // Show popup if not submitted
         function showPopup() {
             if (!localStorage.getItem('popupSubmitted')) {
-                popup.style.display = 'flex';
+                popup.classList.add('show');
             }
         }
 
-        function setupPopupTrigger() {
-            if (localStorage.getItem('popupSubmitted')) return;
-
-            // Exit intent (desktop)
-            let triggered = false;
-            document.addEventListener('mouseout', function (e) {
-                if (!triggered && e.clientY < 10) {
-                    triggered = true;
-                    setTimeout(showPopup, 500); // Small delay for effect
-                }
-            });
-
-            // Mobile fallback: show after 10s
-            setTimeout(() => {
-                if (!triggered) showPopup();
-            }, 1000);
+        // Close and re-show after 20s if not submitted
+        function closePopup() {
+            popup.classList.remove('show');
+            if (!localStorage.getItem('popupSubmitted')) {
+                clearTimeout(reappearTimeout);
+                reappearTimeout = setTimeout(showPopup, 20000);
+            }
         }
 
-        form.addEventListener('submit', function (e) {
+        // Handle form submission
+        form.addEventListener('submit', async function (e) {
             e.preventDefault();
-            localStorage.setItem('popupSubmitted', 'true');
-            closePopup();
-            alert('Thank you for subscribing!');
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const pincode = document.getElementById('pincode').value.trim();
+
+            // UI feedback
+            submitBtn.textContent = "Subscribing...";
+            submitBtn.disabled = true;
+
+            try {
+                const res = await fetch('https://sainath-estate-backend-production.up.railway.app/api/popup-form', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, phone, pincode })
+                });
+
+                if (res.ok) {
+                    localStorage.setItem('popupSubmitted', 'true');
+                    submitBtn.textContent = "Subscribed";
+                    form.reset();
+
+                    setTimeout(() => {
+                        closePopup();
+                        submitBtn.textContent = "Get Property Updates";
+                        submitBtn.disabled = false;
+                    }, 2000);
+                } else {
+                    throw new Error('Subscription failed');
+                }
+            } catch (err) {
+                alert("Something went wrong. Please try again.");
+                submitBtn.textContent = "Get Property Updates";
+                submitBtn.disabled = false;
+            }
         });
 
-        window.onload = setupPopupTrigger;
-
-        function showPopup() {
+        // Show popup after 10s on load
+        window.onload = function () {
             if (!localStorage.getItem('popupSubmitted')) {
-                document.getElementById('popup').classList.add('show');
+                setTimeout(showPopup, 10000);
             }
-        }
+        };
 
+        // Close popup when clicking outside
+        window.addEventListener('click', function (e) {
+            if (popup.classList.contains('show') && e.target === popup) {
+                closePopup();
+            }
+        });
     </script>
+
+
+
 
 </body>
 
