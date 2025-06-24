@@ -302,14 +302,19 @@ Property Page Area
         <section class="space-top space-extra-bottom">
             <div class="container">
                 <div class="slider-area property-slider1">
-                    <!-- Property Banner Main Slider -->
+                    <!-- Property Banner (Hidden on Mobile) -->
+                    <div id="propertyBanner">
+                        <!-- Desktop Banner Images or Content -->
+                    </div>
+
+                    <!-- Mobile Slider (Visible only on Mobile) -->
                     <div class="swiper th-slider mb-4" id="propertySlider"
                         data-slider-options='{"effect":"fade","loop":true,"thumbs":{"swiper":".property-thumb-slider"},"autoplayDisableOnInteraction":"true"}'>
                         <div class="swiper-wrapper" id="mainBannerSlider">
                             <!-- ✅ Dynamic banner images will be injected here via JS -->
                         </div>
                     </div>
-
+                    <div class="space-reducer-5"></div>
                     <!-- Property Banner Thumbnail Slider -->
                     <div class="swiper th-slider property-thumb-slider"
                         data-slider-options='{"effect":"slide","loop":true,"breakpoints":{"0":{"slidesPerView":2},"576":{"slidesPerView":"2"},"768":{"slidesPerView":"3"},"992":{"slidesPerView":"3"},"1200":{"slidesPerView":"4"}},"autoplayDisableOnInteraction":"true"}'>
@@ -697,20 +702,37 @@ Property Page Area
                 const mainBanner = document.getElementById('mainBannerSlider');
                 const thumbBanner = document.getElementById('thumbBannerSlider');
 
-                property.propertyBanner?.forEach(img => {
-                    mainBanner.innerHTML += `
-                    <div class="swiper-slide">
-                        <div class="property-slider-img">
-                            <img src="https://sainath-estate-backend-production.up.railway.app/uploads/${img}" alt="banner">
-                        </div>
-                    </div>`;
-                    thumbBanner.innerHTML += `
-                    <div class="swiper-slide">
-                        <div class="property-slider-img">
-                            <img src="https://sainath-estate-backend-production.up.railway.app/uploads/${img}" alt="thumb">
-                        </div>
-                    </div>`;
-                });
+                // Detect if the device is mobile
+                const isMobile = window.innerWidth <= 767;
+
+                // If on mobile, show only the slider_image
+                if (isMobile) {
+                    if (property.slider_image) {
+                        mainBanner.innerHTML = `
+            <div class="swiper-slide">
+                <div class="property-slider-img">
+                    <img src="https://sainath-estate-backend-production.up.railway.app/uploads/${property.slider_image}" alt="mobile banner">
+                </div>
+            </div>`;
+                    }
+                } else {
+                    // On desktop, use propertyBanner images
+                    property.propertyBanner?.forEach(img => {
+                        mainBanner.innerHTML += `
+            <div class="swiper-slide">
+                <div class="property-slider-img">
+                    <img src="https://sainath-estate-backend-production.up.railway.app/uploads/${img}" alt="banner">
+                </div>
+            </div>`;
+                        thumbBanner.innerHTML += `
+            <div class="swiper-slide">
+                <div class="property-slider-img">
+                    <img src="https://sainath-estate-backend-production.up.railway.app/uploads/${img}" alt="thumb">
+                </div>
+            </div>`;
+                    });
+                }
+
 
                 // ✅ Initialize thumbnail slider first
                 const thumbSwiper = new Swiper(".property-thumb-slider", {
@@ -784,9 +806,6 @@ Property Page Area
             }
         });
     </script>
-
-
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("propertyContactForm");
@@ -863,6 +882,8 @@ Property Page Area
                 alert("Sharing is not supported in this browser.");
             }
         }
+
+
     </script>
 
 

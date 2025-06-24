@@ -5173,6 +5173,10 @@ textarea.is-invalid {
   margin-top: -100px;
 }
 
+.space-reducer-5 {
+  margin-top: -40px;
+}
+
 
 @media (max-width: 768px) {
   .title-area .sec-title {
@@ -17746,6 +17750,14 @@ span.select2-selection.select2-selection--single:focus {
 
 /*------------------- 4.00. Contact  -------------------*/
 /* Contact ---------------------------------- */
+
+@media (max-width: 991px) {
+  .location-map-address {
+    display: none !important;
+  }
+}
+
+
 .location-map {
   position: relative;
 }
@@ -25013,6 +25025,7 @@ span.select2-selection.select2-selection--single:focus {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  margin-bottom: -50px;
 }
 
 .property-page-single .page-title {
@@ -25020,6 +25033,7 @@ span.select2-selection.select2-selection--single:focus {
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--theme-color);
+  line-height: 70px;
 }
 
 .property-page-single p {
@@ -43748,23 +43762,61 @@ video {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #F3E1CD;
+  padding: 10px 0;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .page-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   margin: 0;
-  padding-bottom: 18px;
 }
 
 .share-btn {
   background: none;
   border: none;
-  cursor: pointer;
   padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .share-btn img {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+
+}
+
+@media (max-width: 576px) {
+  .section-header {
+    justify-content: space-between;
+  }
+
+  .share-btn img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .page-title {
+    font-size: 18px;
+  }
+}
+
+#propertyBanner {
+  display: block;
+}
+
+@media (max-width: 767px) {
+  #propertyBanner {
+    display: none !important;
+  }
+
+  #propertySlider {
+    display: block !important;
+  }
 }
