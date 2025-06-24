@@ -317,8 +317,13 @@ button::-moz-focus-inner {
     }
 }
 
-
-
+@media (max-width: 768px) {
+    .mfp-iframe-scaler video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: contain;
+    }
+}
 
 
 .mfp-iframe-scaler {
@@ -332,16 +337,15 @@ button::-moz-focus-inner {
 /* Video iframe itself */
 .mfp-iframe-scaler iframe,
 .mfp-iframe-scaler video {
-    width: auto;
+    width: 100vw;
     height: 100vh;
-    max-height: 100vh;
-    aspect-ratio: 9 / 16;
     object-fit: contain;
     background-color: transparent;
     border-radius: 0;
     box-shadow: none;
-    padding: 50px;
+    padding: 0;
 }
+
 
 img.mfp-img {
     width: auto;
