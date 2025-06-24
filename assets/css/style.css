@@ -17786,6 +17786,18 @@ span.select2-selection.select2-selection--single:focus {
   }
 }
 
+@media (max-width: 768px) {
+  .location-map-address {
+    display: none;
+    /* Ensures it's hidden on mobile */
+  }
+}
+
+@media (max-width: 375px) {
+  .location-map .location-map-address {
+     display: none;
+  }
+}
 
 @media (max-width: 375px) {
   .location-map .location-map-address {
