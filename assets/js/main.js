@@ -1351,38 +1351,38 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         const hotspotDots = document.querySelectorAll(".hotspot-dot");
-        const productHotspotDots = document.querySelectorAll(".product-hotspot-dot");
+        const PropertyHotspotDots = document.querySelectorAll(".Property-hotspot-dot");
 
         let activeIndex = null; // Track the active hotspot index
 
         hotspotDots.forEach((dot, index) => {
             dot.addEventListener("mouseenter", function () {
-                // Hide all product hotspot dots
-                productHotspotDots.forEach(dot => dot.classList.remove("show"));
+                // Hide all Property hotspot dots
+                PropertyHotspotDots.forEach(dot => dot.classList.remove("show"));
 
-                // Show the corresponding product-hotspot-dot
-                const productDot = document.querySelector(`.product-hotspot-dot${index + 1}`);
-                productDot.classList.add("show");
+                // Show the corresponding Property-hotspot-dot
+                const PropertyDot = document.querySelector(`.Property-hotspot-dot${index + 1}`);
+                PropertyDot.classList.add("show");
 
                 // Update the active index
                 activeIndex = index + 1;
             });
         });
 
-        productHotspotDots.forEach((productDot) => {
-            productDot.addEventListener("mouseenter", function () {
+        PropertyHotspotDots.forEach((PropertyDot) => {
+            PropertyDot.addEventListener("mouseenter", function () {
                 this.classList.add("show");
             });
 
-            productDot.addEventListener("mouseleave", function () {
+            PropertyDot.addEventListener("mouseleave", function () {
                 this.classList.remove("show"); // Hide when mouse leaves
             });
         });
 
-        // Click anywhere outside to hide all product-hotspot-dot elements
+        // Click anywhere outside to hide all Property-hotspot-dot elements
         document.addEventListener("click", function (event) {
-            if (!event.target.closest(".hotspot-dot") && !event.target.closest(".product-hotspot-dot")) {
-                productHotspotDots.forEach(dot => dot.classList.remove("show"));
+            if (!event.target.closest(".hotspot-dot") && !event.target.closest(".Property-hotspot-dot")) {
+                PropertyHotspotDots.forEach(dot => dot.classList.remove("show"));
             }
         });
     });

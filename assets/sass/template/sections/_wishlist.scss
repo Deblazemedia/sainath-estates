@@ -55,12 +55,12 @@
             background-color: $theme-color;
         }
     }
-    .product-cb,
-    .product-remove {
+    .Property-cb,
+    .Property-remove {
         width: 40px;
         text-align: center;
     }
-    .product-thumbnail {
+    .Property-thumbnail {
         width: 110px;
     }
     .stock.in-stock {
@@ -69,7 +69,7 @@
     ins {
         text-decoration: none;
     }
-    .product-remove button {
+    .Property-remove button {
         border: none;
         height: 22px;
         width: 22px;
@@ -104,7 +104,7 @@
         font-size: 16px;
     }
 
-    .product-stock {
+    .Property-stock {
         .stock {
             display: block;
         }
@@ -149,13 +149,13 @@
     }
 
     th,
-    td.product-name {
+    td.Property-name {
         font-size: 16px;
         font-weight: 700;
         font-family: $title-font;
     }
 
-    td.product-name {
+    td.Property-name {
         a {
             color: $theme-color;
 
@@ -165,7 +165,7 @@
         }
     }
 
-    td.product-price del {
+    td.Property-price del {
         margin-left: 8px;
         font-size: 0.9em;
     }
@@ -217,7 +217,7 @@
     .tinvwl-txt {
         display: inline-block !important;
     }
-    .product-stock {
+    .Property-stock {
         width: 40px;
         text-align: center;
     }
@@ -228,8 +228,8 @@
         table-layout: fixed;
         border-bottom: 1px solid $border-color;
     }
-    .tinv-wishlist table.tinvwl-table-manage-list tbody td.product-remove,
-    .tinv-wishlist table.tinvwl-table-manage-list thead th:not(.product-name) {
+    .tinv-wishlist table.tinvwl-table-manage-list tbody td.Property-remove,
+    .tinv-wishlist table.tinvwl-table-manage-list thead th:not(.Property-name) {
         display: none;
     }
     .tinv-wishlist table td,
@@ -241,7 +241,7 @@
         width: 100% !important;
         text-align: center;
     }
-    .product-name {
+    .Property-name {
         text-align: center;
     }
     .tinv-wishlist table {

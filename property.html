@@ -808,13 +808,21 @@ Property Page Area
                         listContainer.innerHTML = '';
 
                         data.forEach(property => {
+                            // ✅ Safe encoded image URL
                             const imageUrl = property.slider_image
-                                ? `${baseUrl}/uploads/${property.slider_image}`
+                                ? `${baseUrl}/uploads/${encodeURIComponent(property.slider_image)}`
                                 : 'assets/img/default.jpg';
 
-                            // ✅ Use formattedPrice from backend or fallback
-                            const priceFormatted = property.formattedPrice || `₹${property.price?.toLocaleString('en-IN')}`;
+                            const type = property.type?.trim() || ''; // e.g., '2BHK'
+                            const price = property.price || 0;
 
+                            // ✅ Format price to ₹X.XX Cr if not already present
+                            const shortPrice = property.formattedPrice || `₹${(price / 10000000).toFixed(2)} Cr`;
+
+                            // ✅ Add type info only for "buy"
+                            const displayPrice = (property.listingType === 'buy' && type)
+                                ? `${shortPrice} for ${type}`
+                                : shortPrice;
 
                             const card = `
             <div class="col-md-6 col-xl-4">
@@ -827,8 +835,8 @@ Property Page Area
                     <h4 class="property-card-title">
                       <a href="property-details.html?id=${property._id}">${property.title}</a>
                     </h4>
-                    <h5 class="property-card-price">${priceFormatted}</h5>
-                    <p class="property-card-location">${property.location}</p>
+                    <h5 class="property-card-price">${displayPrice}</h5>
+                    <p class="property-card-location">${property.location || ''}</p>
                   </div>
                   <div class="btn-wrap">
                     <a href="property-details.html?id=${property._id}" class="th-btn style-border th-btn-icon">Details</a>
@@ -847,6 +855,8 @@ Property Page Area
                     });
             });
         </script>
+
+
 </body>
 
 </html>

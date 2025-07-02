@@ -4655,10 +4655,10 @@
         }
     }
 }
-/*product-area********************/
-.product-wrap1 {
+/*Property-area********************/
+.Property-wrap1 {
     position: relative;
-    .product-wrap-thumb {
+    .Property-wrap-thumb {
         position: relative;
         z-index: 1;
         > img {
@@ -4671,7 +4671,7 @@
             }
         }
     }
-    .product-hotspot-wrap {
+    .Property-hotspot-wrap {
         position: absolute;
         inset: 0;
         .hotspot-dot {
@@ -4798,21 +4798,21 @@
             }
         }
     }
-    .product-hotspot-dot {
+    .Property-hotspot-dot {
         position: absolute;
         z-index: 9;
         transition: 0.4s;
         transform: scale(0);
         opacity: 0;
         visibility: hidden;        
-        .product-grid {
+        .Property-grid {
             position: absolute;
             min-width: 320px;
             border-radius: 0;
             transition: 0.4s;
             background: $white-color;
             padding: 24px;
-            .product-img {
+            .Property-img {
                 background: $smoke-color4;
                 border-radius: 0;
                 margin: 0 0 21px 0;
@@ -4823,7 +4823,7 @@
                     display: none;
                 }
             }
-            .product-content {
+            .Property-content {
                 display: flex;
                 text-align: start;
                 justify-content: space-between;
@@ -4839,7 +4839,7 @@
                     transform: none;
                 }
             }
-            .product-title {
+            .Property-title {
                 font-size: 18px;
                 font-weight: 500;
                 margin-bottom: 10px;
@@ -4868,7 +4868,7 @@
             opacity: 1;
             visibility: visible;
         }
-        &.product-hotspot-dot1 {
+        &.Property-hotspot-dot1 {
             left: 600px;
             top: 650px;
             @include ml {
@@ -4893,7 +4893,7 @@
                 top: 280px;
             }
         }
-        &.product-hotspot-dot2 {
+        &.Property-hotspot-dot2 {
             left: 930px;
             top: 550px;
             @include xxl {
@@ -4920,7 +4920,7 @@
                 top: 220px;
             }
         }
-        &.product-hotspot-dot3 {
+        &.Property-hotspot-dot3 {
             left: 700px;
             top: 570px;
             @include xxl {
@@ -4946,7 +4946,7 @@
                 top: 240px;
             }
         }
-        &.product-hotspot-dot4 {
+        &.Property-hotspot-dot4 {
             left: 500px;
             top: 570px;
             @include xxl {
@@ -4975,14 +4975,14 @@
         }
     }
     @include xl {
-        .product-wrap-thumb {
+        .Property-wrap-thumb {
             z-index: 9;
             img {
                 height: auto;
             }
         }
     }
-    .product-wrap-card {
+    .Property-wrap-card {
         background: $white-color;
         padding: 60px 55px;
         max-width: 574px;

@@ -134,8 +134,8 @@ nav.woocommerce-MyAccount-navigation {
 }
 
 table.variations,
-// .woocommerce-grouped-product-list.group_table {
-.woocommerce-grouped-product-list-item {
+// .woocommerce-grouped-Property-list.group_table {
+.woocommerce-grouped-Property-list-item {
     border-collapse: separate;
     border-spacing: 0 15px;
     margin-bottom: 5px;
@@ -184,7 +184,7 @@ table.variations,
     }
 }
 
-.woocommerce-product-attributes {
+.woocommerce-Property-attributes {
     th,
     td {
         border: 1px solid $border-color;
@@ -197,7 +197,7 @@ table.variations,
     }
 }
 
-.woocommerce-grouped-product-list.group_table {
+.woocommerce-grouped-Property-list.group_table {
     border-collapse: collapse;
     margin-bottom: 15px;
 
@@ -263,15 +263,15 @@ table.variations {
     }
 }
 
-.woosq-product .product {
-    .woocommerce-grouped-product-list-item__quantity,
-    .woocommerce-grouped-product-list-item__label,
-    .woocommerce-grouped-product-list-item__price {
+.woosq-Property .Property {
+    .woocommerce-grouped-Property-list-item__quantity,
+    .woocommerce-grouped-Property-list-item__label,
+    .woocommerce-grouped-Property-list-item__price {
         width: auto !important;
     }
 }
-.woocommerce-grouped-product-list-item__label,
-.woocommerce-grouped-product-list-item__price {
+.woocommerce-grouped-Property-list-item__label,
+.woocommerce-grouped-Property-list-item__price {
     &:after {
         display: none;
     }
@@ -287,7 +287,7 @@ table.variations {
 }
 
 .wooscp-table-items {
-    td.woocommerce-product-attributes-item__value {
+    td.woocommerce-Property-attributes-item__value {
         padding-left: 15px !important;
     }
 
@@ -299,21 +299,21 @@ table.variations {
 .tinvwl_added_to_wishlist.tinv-modal.tinv-modal-open {
     z-index: 1111;
 }
-table.woocommerce-product-attributes {
+table.woocommerce-Property-attributes {
     margin-bottom: 30px;
 }
 
 #woosq-popup {
-    .product_meta {
+    .Property_meta {
         margin-top: 20px;
     }
 
-    .product_title {
+    .Property_title {
         font-size: 24px;
         margin-bottom: 5px;
     }
 
-    .single-product .product {
+    .single-Property .Property {
         .actions {
             align-items: center;
             display: flex;
@@ -324,7 +324,7 @@ table.woocommerce-product-attributes {
                 overflow: visible;
                 width: max-content;
 
-                .quantity.style2.woocommerce-grouped-product-list-item__quantity {
+                .quantity.style2.woocommerce-grouped-Property-list-item__quantity {
                     width: max-content;
                 }
             }
