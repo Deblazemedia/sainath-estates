@@ -43394,6 +43394,16 @@ span.select2-selection.select2-selection--single:focus {
   gap: 40px;
   max-width: 1500px;
   margin: 0 auto;
+  background-color: white;
+  padding: 20px 40px;
+  border-radius: 20px;
+}
+
+/* Apply top margin of 20px only on mobile */
+@media (max-width: 768px) {
+    .logo-section {
+        margin: 20px;
+    }
 }
 
 .logo-item {
