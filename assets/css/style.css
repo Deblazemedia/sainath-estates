@@ -5177,6 +5177,10 @@ textarea.is-invalid {
   margin-top: -40px;
 }
 
+.space-reducer-4{
+  margin-bottom: -24px;
+}
+
 
 @media (max-width: 768px) {
   .title-area .sec-title {

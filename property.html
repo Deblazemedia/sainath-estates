@@ -286,7 +286,7 @@
             <div class="row justify-content-center">
                 <div class="col-xl-9">
                     <div class="breadcumb-content">
-                        <h1 class="breadcumb-title">All Property</h1>
+                        <h1 class="breadcumb-title">All Properties</h1>
                         <ul class="breadcumb-menu">
                             <li><a href="index.html">Home</a></li>
                             <li>Properties</li>
@@ -361,7 +361,8 @@ Property Page Area
             <div class="th-sort-bar">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-md">
-                        <p class="woocommerce-result-count">Showing All 7 results</p>
+                        <p class="woocommerce-result-count" id="propertyCountText">Showing All 0 results</p>
+
                     </div>
 
                     <!-- <div class="col-md-auto">
@@ -854,6 +855,20 @@ Property Page Area
                         listContainer.innerHTML = '<p>Unable to load properties at the moment.</p>';
                     });
             });
+
+            document.addEventListener('DOMContentLoaded', async () => {
+                try {
+                    const res = await fetch('https://sainath-estate-backend-production.up.railway.app/api/properties');
+                    const data = await res.json();
+
+                    const count = Array.isArray(data) ? data.length : (data.total || 0);
+
+                    document.getElementById('propertyCountText').textContent = `Showing All ${count} result${count === 1 ? '' : 's'}`;
+                } catch (err) {
+                    console.error('Failed to fetch property count:', err);
+                }
+            });
+
         </script>
 
 

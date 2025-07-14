@@ -4,10 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Sainath Estate - Real Estate Agent</title>
+    <title id="metaTitle">Sainath Estate - Real Estate Agent</title>
     <meta name="author" content="Sainath Estate">
-    <meta name="description"
-        content="Sainath Estate, a trusted real estate agent in Andheri West, Mumbai, offers expert services in buying, selling, and renting properties.">
+    <meta name="description" id="metaDescription" content="Default site description">
     <meta name="keywords" content="Sainath Estate - Real Estate Agent">
     <meta name="robots" content="INDEX,FOLLOW">
 
@@ -21,20 +20,18 @@
 
     <!-- Open Graph Meta Tags for Facebook and LinkedIn -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Sainath Estate - Real Estate Agent">
-    <meta property="og:description"
-        content="Sainath Estate, a trusted real estate agent in Andheri West, Mumbai, offers expert services in buying, selling, and renting properties.">
-    <meta property="og:image" content="https://sainath-estate.netlify.app/assets/img/hero/hero_bg_12_1.jpg">
+    <meta property="og:title" id="ogTitle" content="Sainath Estate - Real Estate Agent">
+    <meta property="og:description" id="ogDescription" content="Default OG description">
+    <meta property="og:image" id="ogImage" content="default.jpg">
     <meta property="og:url" content="https://sainath-estate.netlify.app">
     <meta property="og:site_name" content="Sainath Estate">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Sainath Estate - Real Estate Agent">
-    <meta name="twitter:description"
-        content="Sainath Estate, a trusted real estate agent in Andheri West, Mumbai, offers expert services in buying, selling, and renting properties.">
-    <meta name="twitter:image" content="https://sainath-estate.netlify.app/assets/img/hero/hero_bg_12_1.jpg">
+    <meta name="twitter:title" id="twitterTitle" content="Sainath Estate - Real Estate Agent">
+    <meta name="twitter:description" id="twitterDescription" content="Default Twitter description">
+    <meta name="twitter:image" id="twitterImage" content="default.jpg">
     <meta name="twitter:site" content="@sainathestate">
     <meta name="twitter:creator" content="@sainathestate">
 
@@ -379,11 +376,11 @@ Property Page Area
                                     </div>
                                     <!-- here it will come more -->
                                 </div>
-                                <!-- <h3 class="page-title mt-50 mb-25">Features & amenities</h3> -->
+                                <h3 class="page-title mt-50 mb-25">Features & amenities</h3>
                                 <div class="row gy-3" id="amenitiesContainer">
                                     <!-- Dynamic amenity columns will be inserted here -->
                                 </div>
-
+                                <br>
                                 <!-- Hidden amenity item template -->
                                 <div class="col-xxl-3 col-sm-6 d-none" id="amenityItemTemplate">
                                     <div class="checklist">
@@ -411,13 +408,33 @@ Property Page Area
                                     </div>
                                 </div>
                                 <br>
-                                <h3 class="page-title mt-50 mb-30">Property Video</h3>
+                                <h3 class="page-title mt-45 mb-30">RERA Number</h3>
+                                <div class="rera-box">
+                                    <div class="qr-section">
+                                        <canvas id="reraQRCodeCanvas" width="120" height="120"></canvas>
+                                        <div class="rera-details">
+                                            <p id="reraNumberText" class="rera-number"></p>
+                                        </div>
+                                        <div class="space-reducer-4"></div>
+                                    </div>
+                                    <p class="rera-note mt-3">
+                                        The project is registered with MahaRERA available at website
+                                        <a href="https://maharera.mahaonline.gov.in/"
+                                            target="_blank">https://maharera.mahaonline.gov.in/</a>
+                                    </p>
+
+                                </div>
+
+
+
+                                <br>
+                                <!-- <h3 class="page-title mt-50 mb-30">Property Video</h3>
                                 <div class="video-box2 mb-30" id="propertyVideoSection">
                                     <img id="videoThumbnail" src="" alt="img">
                                     <a id="videoLink" href="" class="play-btn style4 popup-video">
                                         <i class="fa-sharp fa-solid fa-play"></i>
                                     </a>
-                                </div>
+                                </div> -->
                                 <!-- here it will come more -->
                             </div>
                         </div>
@@ -472,8 +489,8 @@ Property Page Area
     </div>
     <div class="space-reducer"></div>
     <!-- Elfsight WhatsApp Chat | Untitled WhatsApp Chat -->
-    <script src="https://static.elfsight.com/platform/platform.js" async></script>
-    <div class="elfsight-app-b17253ea-de98-48ac-82c9-3d6caa871d6f" data-elfsight-app-lazy></div>
+    <!-- <script src="https://static.elfsight.com/platform/platform.js" async></script>
+    <div class="elfsight-app-b17253ea-de98-48ac-82c9-3d6caa871d6f" data-elfsight-app-lazy></div> -->
     <!--==============================
 	Footer Area
 ==============================-->
@@ -652,6 +669,7 @@ Property Page Area
     <script src="assets/js/panolens.min.js"></script>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 
 
     <!-- Main Js File -->
@@ -813,6 +831,23 @@ Property Page Area
                 document.getElementById('propertyMapIframe').src =
                     `https://maps.google.com/maps?q=${encodeURIComponent(property.location)}&output=embed`;
 
+
+                // 6.1 RERA Number + QR Code
+                if (property.reraNumber) {
+                    const reraText = document.getElementById('reraNumberText');
+                    const reraCanvas = document.getElementById('reraQRCodeCanvas');
+
+                    reraText.textContent = property.reraNumber;
+
+                    // Generate QR Code using QRious
+                    new QRious({
+                        element: reraCanvas,
+                        value: property.reraNumber,
+                        size: 120
+                    });
+                }
+
+
                 // 7. Property Video
                 const videoContainer = document.getElementById('propertyVideoSection');
                 if (property.videos?.length) {
@@ -906,8 +941,26 @@ Property Page Area
 
 
     </script>
+    <!--Dynamic Meta Tags Code-->
+    <script>
+        if (property) {
+            const title = property.title || 'Sainath Estate Property';
+            const desc = property.description?.replace(/<[^>]+>/g, '').substring(0, 160) || 'Explore this premium property at Sainath Estate.';
+            const imageUrl = property.slider_image ? `${BASE_URL}/uploads/${property.slider_image}` : 'https://sainath-estate.netlify.app/assets/img/hero/hero_bg_12_1.jpg';
 
+            // Update Title & Meta
+            document.title = title;
+            document.getElementById('metaTitle').textContent = title;
+            document.getElementById('metaDescription').setAttribute('content', desc);
+            document.getElementById('ogTitle').setAttribute('content', title);
+            document.getElementById('ogDescription').setAttribute('content', desc);
+            document.getElementById('ogImage').setAttribute('content', imageUrl);
+            document.getElementById('twitterTitle').setAttribute('content', title);
+            document.getElementById('twitterDescription').setAttribute('content', desc);
+            document.getElementById('twitterImage').setAttribute('content', imageUrl);
+        }
 
+    </script>
 </body>
 
 </html>
