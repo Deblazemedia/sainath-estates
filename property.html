@@ -245,6 +245,32 @@
                 min-width: unset !important;
             }
         }
+
+        #paginationControls {
+            margin-top: 20px;
+        }
+
+        #paginationControls button {
+            background-color: #000;
+            color: #f0f0f0;
+            border: 1px solid #fff;
+            padding: 6px 14px;
+            margin: 0 4px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+        }
+
+        #paginationControls button:hover {
+            background-color: #000;
+            border-color: #ccc;
+        }
+
+        #paginationControls button.active {
+            background-color: #f0f0f0;
+            color: #333;
+            border-color: #fff;
+        }
     </style>
     <!-- Choices.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
@@ -592,8 +618,10 @@ Property Page Area
                     </div>
                 </div>
             </div>
-        </div>
-        <br> <br> <br> <br>
+
+        </div><br>
+        <div class="text-center mt-4" id="paginationControls"></div>
+        
         <!-- <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade active show" id="tab-list" role="tabpanel" aria-labelledby="tab-shop-list">
                     <div class="row gy-40">
@@ -991,42 +1019,48 @@ Property Page Area
         <!-- Main Js File -->
         <script src="assets/js/main.js"></script>
         <script>
-            // Global storage for all properties
             let allProperties = [];
+            let currentPage = 1;
+            const cardsPerPage = 9;
 
             document.addEventListener('DOMContentLoaded', function () {
                 const baseUrl = 'https://sainath-estate-backend-production.up.railway.app';
-                const listContainer = document.getElementById('dynamicPropertyList');
 
-                if (!listContainer) return;
-
-                // 🔁 Fetch all properties from backend
                 fetch(`${baseUrl}/api/properties/view-all`)
                     .then(res => res.json())
                     .then(data => {
-                        allProperties = data; // Store globally
-                        renderPropertyCards(allProperties); // Initial render
-                        updateResultCount(allProperties.length); // Set count initially
+                        allProperties = data;
+                        renderPage(currentPage);
+                        updateResultCount(allProperties.length);
                     })
                     .catch(err => {
                         console.error('Error loading properties:', err);
-                        listContainer.innerHTML = '<p>Unable to load properties at the moment.</p>';
+                        document.getElementById('dynamicPropertyList').innerHTML = '<p>Unable to load properties.</p>';
                     });
 
-                // 🔍 Add filter listeners
+                // Attach input listeners
                 ['propertySearchInput', 'priceRange', 'bhkFilter'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.addEventListener('input', filterAndRender);
                 });
             });
 
-            // 📦 Function to render property cards in the container
+            // Render specific page
+            function renderPage(page) {
+                const start = (page - 1) * cardsPerPage;
+                const end = start + cardsPerPage;
+                const sliced = allProperties.slice(start, end);
+                renderPropertyCards(sliced);
+                renderPaginationControls();
+            }
+
+            // Render property cards
             function renderPropertyCards(list) {
                 const baseUrl = 'https://sainath-estate-backend-production.up.railway.app';
                 const listContainer = document.getElementById('dynamicPropertyList');
                 listContainer.innerHTML = '';
 
-                if (!list || list.length === 0) {
+                if (!list.length) {
                     listContainer.innerHTML = '<p>No matching properties found.</p>';
                     return;
                 }
@@ -1039,36 +1073,50 @@ Property Page Area
                     const type = property.type?.trim() || '';
                     const price = property.price || 0;
                     const shortPrice = property.formattedPrice || `₹${(price / 10000000).toFixed(2)} Cr`;
+                    const displayPrice = (property.listingType === 'buy' && type) ? `${shortPrice} for ${type}` : shortPrice;
 
-                    const displayPrice = (property.listingType === 'buy' && type)
-                        ? `${shortPrice} for ${type}`
-                        : shortPrice;
-
-                    const card = `
-        <div class="col-md-6 col-xl-4">
-          <div class="property-card2">
-            <div class="property-card-thumb img-shine">
-              <img src="${imageUrl}" alt="${property.title}">
-            </div>
-            <div class="property-card-details">
-              <div class="media-left">
-                <h4 class="property-card-title">
-                  <a href="property-details.html?id=${property._id}">${property.title}</a>
-                </h4>
-                <h5 class="property-card-price">${displayPrice}</h5>
-                <p class="property-card-location">${property.location || ''}</p>
-              </div>
-              <div class="btn-wrap">
-                <a href="property-details.html?id=${property._id}" class="th-btn style-border th-btn-icon">Details</a>
-              </div>
-            </div>
-          </div>
-        </div>`;
-                    listContainer.innerHTML += card;
+                    listContainer.innerHTML += `
+                <div class="col-md-6 col-xl-4">
+                    <div class="property-card2">
+                        <div class="property-card-thumb img-shine">
+                            <img src="${imageUrl}" alt="${property.title}">
+                        </div>
+                        <div class="property-card-details">
+                            <div class="media-left">
+                                <h4 class="property-card-title">
+                                    <a href="property-details.html?id=${property._id}">${property.title}</a>
+                                </h4>
+                                <h5 class="property-card-price">${displayPrice}</h5>
+                                <p class="property-card-location">${property.location || ''}</p>
+                            </div>
+                            <div class="btn-wrap">
+                                <a href="property-details.html?id=${property._id}" class="th-btn style-border th-btn-icon">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
                 });
             }
 
-            // 🔢 Update the visible property count text
+            // Pagination buttons
+            function renderPaginationControls() {
+                const totalPages = Math.ceil(allProperties.length / cardsPerPage);
+                const container = document.getElementById('paginationControls');
+                container.innerHTML = '';
+
+                for (let i = 1; i <= totalPages; i++) {
+                    container.innerHTML += `
+                <button class="btn btn-outline-primary mx-1 ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                }
+            }
+
+            // Go to page
+            function goToPage(page) {
+                currentPage = page;
+                renderPage(page);
+            }
+
+            // Count display
             function updateResultCount(count, isFiltered = false) {
                 const countText = document.getElementById('propertyCountText');
                 if (countText) {
@@ -1078,7 +1126,7 @@ Property Page Area
                 }
             }
 
-            // 🔍 Filter based on search, price, and BHK type
+            // Filter logic
             function filterAndRender() {
                 const searchQuery = document.getElementById('propertySearchInput')?.value.toLowerCase() || '';
                 const selectedPrice = parseInt(document.getElementById('priceRange')?.value) || 0;
@@ -1093,22 +1141,13 @@ Property Page Area
                     return (titleMatch || locationMatch) && priceMatch && bhkMatch;
                 });
 
-                renderPropertyCards(filtered);
+                allProperties = filtered;
+                currentPage = 1;
+                renderPage(currentPage);
                 updateResultCount(filtered.length, searchQuery || selectedPrice || selectedBHK);
             }
-
-            // 📊 Fallback property count loader (optional backup)
-            document.addEventListener('DOMContentLoaded', async () => {
-                try {
-                    const res = await fetch('https://sainath-estate-backend-production.up.railway.app/api/properties');
-                    const data = await res.json();
-                    const count = Array.isArray(data) ? data.length : (data.total || 0);
-                    updateResultCount(count);
-                } catch (err) {
-                    console.error('Failed to fetch property count:', err);
-                }
-            });
         </script>
+
 </body>
 
 </html>
