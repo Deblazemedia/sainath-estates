@@ -114,9 +114,9 @@ a {
 .top-header .navbar .searchbar .form-control {
 	border-radius: 30px;
 	border: 1px solid rgb(206 212 218 / 0%);
-	background-color: #F7F8FA;
+	background-color: #efefef;
 	padding-left: 2.5rem;
-	color: #F7F8FA;
+	color: #333333;
 	padding-right: 2.5rem;
 
 }
@@ -133,13 +133,12 @@ a {
 .top-header .navbar .dropdown-searchbar .form-control:focus {
 	border-color: #86b7fe;
 	box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
-	color: #F7F8FA;
+	color: #333333;
 }
 
 .top-header .navbar .searchbar .search-icon,
 .top-header .navbar .dropdown-searchbar .search-icon {
-
-	opacity: 0.5;
+	opacity: 1;
 
 }
 

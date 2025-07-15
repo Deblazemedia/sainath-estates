@@ -2648,7 +2648,7 @@ Contact Area
                 .then(data => {
                     wrapper.innerHTML = '';
 
-                    data.slice(0, 3).forEach(property => {
+                    data.slice(0, 6).forEach(property => {
                         const imageUrl = property.slider_image
                             ? `${baseUrl}/uploads/${encodeURIComponent(property.slider_image)}?_=${timestamp}`
                             : 'assets/img/default.jpg';

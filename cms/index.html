@@ -47,13 +47,13 @@
         <div class="mobile-toggle-icon d-xl-none">
           <i class="bi bi-list"></i>
         </div>
-
         <div class="search-toggle-icon d-xl-none ms-auto">
-          <!-- <i class="bi bi-search"></i> -->
+          <i class="bi bi-search"></i>
         </div>
         <form class="searchbar d-none d-xl-flex ms-auto">
-          <!-- <div class="position-absolute top-50 translate-middle-y search-icon ms-3"><i class="bi bi-search"></i></div> -->
-          <input class="form-control" type="text">
+          <div class="position-absolute top-50 translate-middle-y search-icon ms-3"><i class="bi bi-search"></i></div>
+          <input class="form-control" type="text" id="propertySearchInput"
+            placeholder="Search by title or location">&nbsp;
           <div class="position-absolute top-50 translate-middle-y d-block d-xl-none search-close-icon"><i
               class="bi bi-x-lg"></i></div>
         </form>
@@ -99,7 +99,6 @@
                       <div class="setting-text ms-3"><span>Logout</span></div>
                     </div>
                   </a>
-
                 </li>
               </ul>
             </li>
@@ -155,8 +154,7 @@
         <div class="ps-3">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
-
-              <li class="breadcrumb-item active" aria-current="page">Properties List</li>
+              <li class="breadcrumb-item active" aria-current="page" id="propertyCountBreadcrumb">Total Properties</li>
             </ol>
           </nav>
         </div>
@@ -184,13 +182,21 @@
                 </tr>
               </thead>
               <tbody id="propertyTableBody"></tbody>
-              <!-- Pagination -->
-              <nav class="float-end mt-4" id="paginationControls" aria-label="Page navigation"></nav>
             </table>
+            <!-- Pagination -->
+            <nav class="float-end mt-4" id="paginationControls" aria-label="Page navigation"></nav>
           </div>
         </div>
       </div>
-
+      <div id="footerAttribution" style="
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 14px;
+  color: #555;
+  background-color: #f8f9fa;
+">
+        Made with ❤️ by <strong>De Blaze Media</strong>
+      </div>
   </div>
 
   </main>
@@ -210,6 +216,33 @@
 
   </div>
   <!--end wrapper-->
+
+  <!--delete popup-->
+
+  <div id="deletePopupOverlay"
+    style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9998;">
+  </div>
+
+  <div id="deletePopup" style="
+  display: none;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  max-width: 90%;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  z-index: 9999;
+  text-align: center;
+">
+    <p style="font-weight: 600; color: #000;">Do you want to delete this property?</p>
+    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px;">
+      <button id="confirmDeleteBtn" class="btn btn-dark px-3">Yes</button>
+      <button id="cancelDeleteBtn" class="btn btn-outline-danger px-3">No</button>
+    </div>
+  </div>
 
 
   <!-- Bootstrap bundle JS -->
@@ -281,6 +314,12 @@
         if (res.ok) {
           allProperties = data;
           renderPage(1);
+
+          // ✅ Update breadcrumb with property count
+          const countEl = document.getElementById('propertyCountBreadcrumb');
+          if (countEl) {
+            countEl.textContent = `Total Properties (${allProperties.length})`;
+          }
         } else {
           alert(data.error || 'Failed to load properties');
         }
@@ -289,6 +328,7 @@
         alert('Error loading property list');
       }
     }
+
 
     // 🎯 PAGINATION LOGIC
     function renderPage(page) {
@@ -337,8 +377,9 @@
   <td>${location}</td>
   <td class="text-end">
     <a href="${detailUrl}" target="_blank" class="text-primary me-2" title="View"><i class="bi bi-eye-fill"></i></a>
-    <a href="/cms/add-new-property.html?id=${item._id}" class="text-warning me-2" title="Edit"><i class="bi bi-pencil-fill"></i></a>
-    <a href="#" class="text-danger" title="Delete"><i class="bi bi-trash-fill"></i></a>
+     <a href="#" class="text-success" title="Copy Link" onclick="copyPropertyLink('${detailUrl}', this)"><i class="bi bi-clipboard"></i></a>&nbsp;&nbsp;
+    <a href="/cms/add-new-property.html?id=${item._id}" target="_blank" class="text-warning me-2" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+    <a href="#" class="text-danger" title="Delete" onclick="showDeletePopup('${item._id}')"><i class="bi bi-trash-fill"></i></a>&nbsp;&nbsp;
   </td>
 `;
         tbody.appendChild(row);
@@ -423,13 +464,91 @@
       }
     });
   </script>
+  <!--Search System Code -->
   <script>
     function logout() {
       localStorage.removeItem('token');
       window.location.href = '/cms/admin-signin.html';
     }
   </script>
+  <script>
+    const searchInput = document.getElementById('propertySearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim().toLowerCase();
+        const filtered = allProperties.filter(p =>
+          p.title?.toLowerCase().includes(query) ||
+          p.location?.toLowerCase().includes(query)
+        );
 
+        renderProperties(filtered);
+        renderPaginationControls(filtered.length);
+
+        // ✅ Update breadcrumb count with search result count
+        const countEl = document.getElementById('propertyCountBreadcrumb');
+        if (countEl) {
+          countEl.textContent = query
+            ? `Search Results (${filtered.length})`
+            : `Total Properties (${allProperties.length})`;
+        }
+      });
+    }
+
+  </script>
+  <!--Delete popup js-->
+  <script>
+    let deletePropertyId = null;
+
+    function showDeletePopup(propertyId) {
+      deletePropertyId = propertyId;
+      document.getElementById('deletePopup').style.display = 'block';
+      document.getElementById('deletePopupOverlay').style.display = 'block';
+    }
+
+    function hideDeletePopup() {
+      document.getElementById('deletePopup').style.display = 'none';
+      document.getElementById('deletePopupOverlay').style.display = 'none';
+      deletePropertyId = null;
+    }
+
+    // Handle confirm / cancel
+    document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+      if (!deletePropertyId) return;
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`https://sainath-estate-backend-production.up.railway.app/api/properties/${deletePropertyId}`, {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.error || 'Delete failed');
+
+        allProperties = allProperties.filter(p => p._id !== deletePropertyId);
+        renderPage(currentPage);
+        hideDeletePopup();
+      } catch (err) {
+        alert('Failed to delete. Please try again.');
+        console.error(err);
+      }
+    });
+
+    document.getElementById('cancelDeleteBtn').addEventListener('click', hideDeletePopup);
+    document.getElementById('deletePopupOverlay').addEventListener('click', hideDeletePopup);
+    // Copy Js Script
+
+    function copyPropertyLink(link, element) {
+      navigator.clipboard.writeText(link).then(() => {
+        element.innerHTML = '<i class="bi bi-check-lg"></i>';
+        setTimeout(() => {
+          element.innerHTML = '<i class="bi bi-clipboard"></i>';
+        }, 1000);
+      }).catch(() => {
+        alert('Failed to copy link');
+      });
+    }
+
+  </script>
 
 
 

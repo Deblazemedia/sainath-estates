@@ -168,7 +168,13 @@
         <div class="col-lg-8 mx-auto">
           <div class="card">
             <div class="card-header py-3 bg-transparent">
-              <h5 class="mb-0" id="propertyFormTitle">Add New Property</h5>
+              <h5 id="propertyFormTitle">
+                <a href="/cms/index.html" style="text-decoration: none; color: inherit; margin-right: 10px;">
+                  <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <span id="formTitleText"></span>
+              </h5>
+
 
 
             </div>
@@ -356,10 +362,11 @@
       const actionRow = document.getElementById('actionRow');
 
       // ✅ Set heading dynamically
-      const formTitle = document.getElementById('propertyFormTitle');
-      if (formTitle) {
-        formTitle.textContent = propertyId ? 'Update Property' : 'Add New Property';
+      const formTitleText = document.getElementById('formTitleText');
+      if (formTitleText) {
+        formTitleText.textContent = propertyId ? 'Update Property' : 'Add New Property';
       }
+
 
       // 🔧 Initialize Quill
       quill = new Quill('#descriptionEditor', {
