@@ -33,7 +33,11 @@
   <!-- Fonts Awesome CSS -->
   <link rel="stylesheet" type="text/css" href="/assets/vendors/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <style>
+    .sortable-ghost {
+      opacity: 0.4;
+    }
+  </style>
 </head>
 
 <body>
@@ -135,7 +139,7 @@
           </a>
         </li> -->
         <li>
-          <a href="#" onclick="logout()">
+          <a href="javascript:void(0)" onclick="logout()">
             <div class="parent-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
             <div class="menu-title">Logout</div>
           </a>
@@ -173,7 +177,7 @@
             <table class="table align-middle table-striped">
               <thead class="text-muted small text-uppercase">
                 <tr>
-                  <th style="width: 15%;">Image</th>
+                  <th style="width: 15%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Image</th>
                   <th style="width: 25%;">Title</th>
                   <th style="width: 15%;">Price</th>
                   <th style="width: 15%;">Published Date</th>
@@ -182,37 +186,56 @@
                 </tr>
               </thead>
               <tbody id="propertyTableBody"></tbody>
+
             </table>
-            <!-- Pagination -->
-            <nav class="float-end mt-4" id="paginationControls" aria-label="Page navigation"></nav>
+            <!-- Dropdown + Pagination on Same Row -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <!-- Entries Dropdown -->
+              <div>
+                <label for="itemsPerPage" class="me-2 fw-semibold">Show: </label>
+                <select id="itemsPerPage" class="form-select d-inline-block w-auto">
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                <!-- <span class="ms-2">entries</span> -->
+              </div>
+
+
+              <!-- Pagination -->
+              <nav class="float-end mt-4" id="paginationControls" aria-label="Page navigation"></nav>
+
+            </div>
+
           </div>
         </div>
-      </div>
-      <div id="footerAttribution" style="
+        <div id="footerAttribution" style="
   text-align: center;
   padding: 20px 10px;
   font-size: 14px;
   color: #555;
   background-color: #f8f9fa;
 ">
-        Made with ❤️ by <strong>De Blaze Media</strong>
+          Made with ❤️ by <strong>De Blaze Media</strong>
+        </div>
       </div>
-  </div>
 
-  </main>
-  <!--end page main-->
+    </main>
+    <!--end page main-->
 
 
-  <!--start overlay-->
-  <div class="overlay nav-toggle-icon"></div>
-  <!--end overlay-->
+    <!--start overlay-->
+    <div class="overlay nav-toggle-icon"></div>
+    <!--end overlay-->
 
-  <!--Start Back To Top Button-->
-  <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-  <!--End Back To Top Button-->
+    <!--Start Back To Top Button-->
+    <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+    <!--End Back To Top Button-->
 
-  <!--start switcher-->
-  <!--end switcher-->
+    <!--start switcher-->
+    <!--end switcher-->
 
   </div>
   <!--end wrapper-->
@@ -255,10 +278,27 @@
   <script src="assets/js/pace.min.js"></script>
   <!--app-->
   <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   <script>
-    const PROPERTIES_PER_PAGE = 10;
+    document.addEventListener('DOMContentLoaded', function () {
+      const tableBody = document.getElementById('propertyTableBody');
+
+      Sortable.create(tableBody, {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        handle: '.drag-handle', // Optional: add a drag icon
+        onEnd: function (evt) {
+          console.log(`Moved row from ${evt.oldIndex} to ${evt.newIndex}`);
+          // Optionally send new order to server here
+        }
+      });
+    });
+  </script>
+
+  <script>
+    let PROPERTIES_PER_PAGE = parseInt(localStorage.getItem('itemsPerPage')) || 10;
+    let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
     let allProperties = [];
-    let currentPage = 1;
 
     // 🔐 LOGIN HANDLER
     async function handleLogin(event) {
@@ -286,7 +326,6 @@
       }
     }
 
-
     // 🛡 PROTECT DASHBOARD
     function protectDashboard() {
       const token = localStorage.getItem('token');
@@ -313,7 +352,7 @@
         const data = await res.json();
         if (res.ok) {
           allProperties = data;
-          renderPage(1);
+          renderPage(currentPage);
 
           // ✅ Update breadcrumb with property count
           const countEl = document.getElementById('propertyCountBreadcrumb');
@@ -329,10 +368,10 @@
       }
     }
 
-
     // 🎯 PAGINATION LOGIC
     function renderPage(page) {
       currentPage = page;
+      localStorage.setItem('currentPage', currentPage); // Save current page
       const startIndex = (page - 1) * PROPERTIES_PER_PAGE;
       const endIndex = startIndex + PROPERTIES_PER_PAGE;
       const paginatedData = allProperties.slice(startIndex, endIndex);
@@ -361,29 +400,25 @@
         const location = item.location || '—';
 
         const row = document.createElement('tr');
-
-        const isDraft = item.status !== 'available'; // status check
+        const isDraft = item.status !== 'available';
         const titleWithDraft = isDraft
           ? `${item.title} <span class="badge bg-secondary ms-2">DRAFT</span>`
           : item.title;
 
         row.innerHTML = `
-  <td>
-    <img src="${imageUrl}" alt="Property" width="60" class="img-thumbnail" style="cursor:pointer;" onclick="showImagePopup('${imageUrl}')">
-  </td>
-  <td>${titleWithDraft}</td>
-  <td>${price}</td>
-  <td>${createdDate}</td>
-  <td>${location}</td>
-  <td class="text-end">
-    <a href="${detailUrl}" target="_blank" class="text-primary me-2" title="View"><i class="bi bi-eye-fill"></i></a>
-     <a href="#" class="text-success" title="Copy Link" onclick="copyPropertyLink('${detailUrl}', this)"><i class="bi bi-clipboard"></i></a>&nbsp;&nbsp;
-    <a href="/cms/add-new-property.html?id=${item._id}" target="_blank" class="text-warning me-2" title="Edit"><i class="bi bi-pencil-fill"></i></a>
-    <a href="#" class="text-danger" title="Delete" onclick="showDeletePopup('${item._id}')"><i class="bi bi-trash-fill"></i></a>&nbsp;&nbsp;
-  </td>
-`;
+        <td>
+            <img src="${imageUrl}" alt="Property" width="60" class="img-thumbnail" style="cursor:pointer;" onclick="showImagePopup('${imageUrl}')"></td>
+        <td>${titleWithDraft}</td>
+        <td>${price}</td>
+        <td>${createdDate}</td>
+        <td>${location}</td>
+        <td class="text-end">
+          <a href="${detailUrl}" target="_blank" class="text-primary me-2" title="View"><i class="bi bi-eye-fill"></i></a>
+          <a href="javascript:void(0)" class="text-success" title="Copy Link" onclick="copyPropertyLink('${detailUrl}', this)"><i class="bi bi-clipboard"></i></a>&nbsp;&nbsp;
+          <a href="/cms/add-new-property.html?id=${item._id}" target="_blank" class="text-warning me-2" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+          <a href="javascript:void(0)" class="text-danger" title="Delete" onclick="showDeletePopup('${item._id}')"><i class="bi bi-trash-fill"></i></a>
+        </td>`;
         tbody.appendChild(row);
-
       });
     }
 
@@ -394,7 +429,6 @@
 
       paginationContainer.innerHTML = '';
       const totalPages = Math.ceil(totalItems / PROPERTIES_PER_PAGE);
-
       if (totalPages <= 1) return;
 
       const ul = document.createElement('ul');
@@ -414,36 +448,44 @@
       paginationContainer.appendChild(ul);
     }
 
-    // 🖼 POPUP IMAGE VIEW WITH SMOOTH ANIMATION
+    // 📌 HANDLE "SHOW X PER PAGE" SELECT
+    document.addEventListener('DOMContentLoaded', () => {
+      const perPageSelect = document.getElementById('itemsPerPage');
+      if (perPageSelect) {
+        perPageSelect.value = PROPERTIES_PER_PAGE; // Set saved value
+        perPageSelect.addEventListener('change', (e) => {
+          PROPERTIES_PER_PAGE = parseInt(e.target.value);
+          localStorage.setItem('itemsPerPage', PROPERTIES_PER_PAGE); // Save new limit
+          renderPage(currentPage);
+        });
+      }
+    });
+
+    // 🖼 POPUP IMAGE VIEW
     function showImagePopup(url) {
       const popup = document.createElement('div');
       popup.style.cssText = `
-    position: fixed; top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.7);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 9999; opacity: 0;
-    transition: opacity 0.3s ease;
-  `;
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.7);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 9999; opacity: 0;
+      transition: opacity 0.3s ease;`;
 
       const img = document.createElement('img');
       img.src = url;
       img.style.cssText = `
-    max-width: 90%; max-height: 90%;
-    border-radius: 8px; box-shadow: 0 0 20px #000;
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-  `;
+      max-width: 90%; max-height: 90%;
+      border-radius: 8px; box-shadow: 0 0 20px #000;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;`;
 
       popup.appendChild(img);
       document.body.appendChild(popup);
-
-      // Trigger animation
       void popup.offsetWidth;
       popup.style.opacity = '1';
       img.style.transform = 'scale(1)';
 
-      // Close popup on click with fade-out
       popup.addEventListener('click', () => {
         popup.style.opacity = '0';
         img.style.transform = 'scale(0.95)';
@@ -451,8 +493,7 @@
       });
     }
 
-
-    // 🚀 INIT
+    // INIT
     document.addEventListener('DOMContentLoaded', () => {
       const loginForm = document.querySelector('form.form-body');
       if (loginForm) {
@@ -464,6 +505,7 @@
       }
     });
   </script>
+
   <!--Search System Code -->
   <script>
     function logout() {
