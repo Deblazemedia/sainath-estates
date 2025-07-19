@@ -5177,7 +5177,7 @@ textarea.is-invalid {
   margin-top: -40px;
 }
 
-.space-reducer-4{
+.space-reducer-4 {
   margin-bottom: -24px;
 }
 
@@ -17799,7 +17799,7 @@ span.select2-selection.select2-selection--single:focus {
 
 @media (max-width: 375px) {
   .location-map .location-map-address {
-     display: none;
+    display: none;
   }
 }
 
@@ -43405,9 +43405,9 @@ span.select2-selection.select2-selection--single:focus {
 
 /* Apply top margin of 20px only on mobile */
 @media (max-width: 768px) {
-    .logo-section {
-        margin: 20px;
-    }
+  .logo-section {
+    margin: 20px;
+  }
 }
 
 .logo-item {
