@@ -1020,32 +1020,54 @@ Property Page Area
         <script src="assets/js/main.js"></script>
         <script>
             let allProperties = [];
+            let originalProperties = [];
             let currentPage = 1;
             const cardsPerPage = 9;
+            const baseUrl = 'https://sainath-estate-backend-production.up.railway.app';
 
-            document.addEventListener('DOMContentLoaded', function () {
-                const baseUrl = 'https://sainath-estate-backend-production.up.railway.app';
-
-                fetch(`${baseUrl}/api/properties/view-all`)
-                    .then(res => res.json())
-                    .then(data => {
-                        allProperties = data;
-                        renderPage(currentPage);
-                        updateResultCount(allProperties.length);
-                    })
-                    .catch(err => {
-                        console.error('Error loading properties:', err);
-                        document.getElementById('dynamicPropertyList').innerHTML = '<p>Unable to load properties.</p>';
-                    });
+            document.addEventListener('DOMContentLoaded', async () => {
+                try {
+                    const res = await fetch(`${baseUrl}/api/properties/view-all`);
+                    const data = await res.json();
+                    originalProperties = data;
+                    allProperties = [...originalProperties];
+                    renderPage(currentPage);
+                    updateResultCount(allProperties.length);
+                } catch (err) {
+                    console.error('Error loading properties:', err);
+                    document.getElementById('dynamicPropertyList').innerHTML = '<p>Unable to load properties.</p>';
+                }
 
                 // Attach input listeners
                 ['propertySearchInput', 'priceRange', 'bhkFilter'].forEach(id => {
                     const el = document.getElementById(id);
-                    if (el) el.addEventListener('input', filterAndRender);
+                    if (el) el.addEventListener('input', handleFilterInput);
                 });
             });
 
-            // Render specific page
+            function handleFilterInput() {
+                filterProperties();
+                currentPage = 1;
+                renderPage(currentPage);
+            }
+
+            function filterProperties() {
+                const searchQuery = document.getElementById('propertySearchInput')?.value.toLowerCase() || '';
+                const selectedPrice = parseInt(document.getElementById('priceRange')?.value) || 0;
+                const selectedBHK = document.getElementById('bhkFilter')?.value || '';
+
+                allProperties = originalProperties.filter(p => {
+                    const titleMatch = p.title?.toLowerCase().includes(searchQuery);
+                    const locationMatch = p.location?.toLowerCase().includes(searchQuery);
+                    const priceCr = p.price ? Math.round(p.price / 10000000) : 0;
+                    const priceMatch = selectedPrice ? priceCr === selectedPrice : true;
+                    const bhkMatch = selectedBHK ? p.type?.toUpperCase() === selectedBHK.toUpperCase() : true;
+                    return (titleMatch || locationMatch) && priceMatch && bhkMatch;
+                });
+
+                updateResultCount(allProperties.length, !!(searchQuery || selectedPrice || selectedBHK));
+            }
+
             function renderPage(page) {
                 const start = (page - 1) * cardsPerPage;
                 const end = start + cardsPerPage;
@@ -1054,14 +1076,12 @@ Property Page Area
                 renderPaginationControls();
             }
 
-            // Render property cards
             function renderPropertyCards(list) {
-                const baseUrl = 'https://sainath-estate-backend-production.up.railway.app';
-                const listContainer = document.getElementById('dynamicPropertyList');
-                listContainer.innerHTML = '';
+                const container = document.getElementById('dynamicPropertyList');
+                container.innerHTML = '';
 
                 if (!list.length) {
-                    listContainer.innerHTML = '<p>No matching properties found.</p>';
+                    container.innerHTML = '<p>No matching properties found.</p>';
                     return;
                 }
 
@@ -1075,7 +1095,7 @@ Property Page Area
                     const shortPrice = property.formattedPrice || `₹${(price / 10000000).toFixed(2)} Cr`;
                     const displayPrice = (property.listingType === 'buy' && type) ? `${shortPrice} for ${type}` : shortPrice;
 
-                    listContainer.innerHTML += `
+                    container.innerHTML += `
                 <div class="col-md-6 col-xl-4">
                     <div class="property-card2">
                         <div class="property-card-thumb img-shine">
@@ -1098,7 +1118,6 @@ Property Page Area
                 });
             }
 
-            // Pagination buttons
             function renderPaginationControls() {
                 const totalPages = Math.ceil(allProperties.length / cardsPerPage);
                 const container = document.getElementById('paginationControls');
@@ -1110,13 +1129,11 @@ Property Page Area
                 }
             }
 
-            // Go to page
             function goToPage(page) {
                 currentPage = page;
                 renderPage(page);
             }
 
-            // Count display
             function updateResultCount(count, isFiltered = false) {
                 const countText = document.getElementById('propertyCountText');
                 if (countText) {
@@ -1125,28 +1142,8 @@ Property Page Area
                         : `Showing All ${count} Result${count !== 1 ? 's' : ''}`;
                 }
             }
-
-            // Filter logic
-            function filterAndRender() {
-                const searchQuery = document.getElementById('propertySearchInput')?.value.toLowerCase() || '';
-                const selectedPrice = parseInt(document.getElementById('priceRange')?.value) || 0;
-                const selectedBHK = document.getElementById('bhkFilter')?.value || '';
-
-                let filtered = allProperties.filter(p => {
-                    const titleMatch = p.title?.toLowerCase().includes(searchQuery);
-                    const locationMatch = p.location?.toLowerCase().includes(searchQuery);
-                    const priceCr = p.price ? Math.round(p.price / 10000000) : 0;
-                    const priceMatch = selectedPrice ? priceCr === selectedPrice : true;
-                    const bhkMatch = selectedBHK ? p.type?.toUpperCase() === selectedBHK.toUpperCase() : true;
-                    return (titleMatch || locationMatch) && priceMatch && bhkMatch;
-                });
-
-                allProperties = filtered;
-                currentPage = 1;
-                renderPage(currentPage);
-                updateResultCount(filtered.length, searchQuery || selectedPrice || selectedBHK);
-            }
         </script>
+
 
 </body>
 
