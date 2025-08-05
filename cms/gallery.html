@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en" class="minimal-theme">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/assets/img/favicons/favicon-16x16.png" type="image/png" />
+    <!--plugins-->
+    <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap-extended.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <!-- loader-->
+    <link href="assets/css/pace.min.css" rel="stylesheet" />
+
+
+    <!--Theme Styles-->
+    <link href="assets/css/dark-theme.css" rel="stylesheet" />
+    <link href="assets/css/light-theme.css" rel="stylesheet" />
+    <link href="assets/css/semi-dark.css" rel="stylesheet" />
+    <link href="assets/css/header-colors.css" rel="stylesheet" />
+
+    <title>Gallery</title>
+
+    <!-- Fonts Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/vendors/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sortable-ghost {
+            opacity: 0.4;
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SYCBK76N5W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-SYCBK76N5W');
+    </script>
+</head>
+
+<body>
+
+
+    <!--start wrapper-->
+    <div class="wrapper">
+        <!--start top header-->
+        <header class="top-header">
+            <nav class="navbar navbar-expand">
+                <div class="mobile-toggle-icon d-xl-none">
+                    <i class="bi bi-list"></i>
+                </div>
+                <div class="search-toggle-icon d-xl-none ms-auto">
+                    <i class="bi bi-search"></i>
+                </div>
+                <form class="searchbar d-none d-xl-flex ms-auto">
+                    <div class="position-absolute top-50 translate-middle-y search-icon ms-3"><i
+                            class="bi bi-search"></i></div>
+                    <input class="form-control" type="text" id="propertySearchInput"
+                        placeholder="Search by title or location">&nbsp;
+                    <div class="position-absolute top-50 translate-middle-y d-block d-xl-none search-close-icon"><i
+                            class="bi bi-x-lg"></i></div>
+                </form>
+                <div class="top-navbar d-none d-xl-block">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://sainathestate.com/" target="_blank"><i
+                                    class="fa-solid fa-arrow-up-right-from-square"></i> &nbsp; View
+                                Website
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="top-navbar-right ms-3">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item dropdown dropdown-large">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
+                                data-bs-toggle="dropdown">
+                                <div class="user-setting d-flex align-items-center gap-1">
+                                    <img src="assets/images/avatars/avatar-1.png" class="user-img" alt="">
+                                    <div class="user-name d-none d-sm-block">Bunty</div>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <img src="assets/images/avatars/avatar-1.png" alt="" class="rounded-circle"
+                                                width="60" height="60">
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 dropdown-user-name">Bunty</h6>
+                                                <small
+                                                    class="mb-0 dropdown-user-designation text-secondary">Admin</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#" onclick="logout()">
+                                        <div class="d-flex align-items-center">
+                                            <div class="setting-icon"><i
+                                                    class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                                            <div class="setting-text ms-3"><span>Logout</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!--end top header-->
+
+        <!--start sidebar -->
+        <aside class="sidebar-wrapper" data-simplebar="true">
+            <div class="sidebar-header">
+                <div>
+                    <img src="/assets/img/logo_2.png" class="logo-icon" alt="logo icon">
+                </div>
+
+                <div class="toggle-icon ms-auto"><i class="bi bi-chevron-double-left"></i>
+                </div>
+            </div>
+            <!--navigation-->
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="index.html">
+                        <div class="parent-icon"><i class="fa-solid fa-building"></i>
+                        </div>
+                        <div class="menu-title">Properties</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="add-new-gallery.html">
+                        <div class="parent-icon"><i class="fa-solid fa-image"></i>
+                        </div>
+                        <div class="menu-title">Gallery Images</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" onclick="logout()">
+                        <div class="parent-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                        <div class="menu-title">Logout</div>
+                    </a>
+
+                </li>
+            </ul>
+            <!--end navigation-->
+        </aside>
+        <!--end sidebar -->
+
+        <!--start content-->
+        <main class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item active" aria-current="page" id="propertyCountBreadcrumb">Total
+                                Properties</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <a href="add-new-gallery.html">
+                            <button type="button" class="btn btn-primary">Add New Image</button></a>
+                    </div>
+                </div>
+            </div>
+            <!--end breadcrumb-->
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table align-middle table-striped">
+                            <thead class="text-muted small text-uppercase">
+                                <tr>
+                                    <th style="width: 20%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Image</th>
+                                    <th style="width: 40%;">Title</th>
+                                    <th style="width: 30%;">Subtitle</th>
+                                    <th style="width: 10%;" class="text-end">Options</th>
+                                </tr>
+                            </thead>
+                            <tbody id="propertyTableBody"></tbody>
+                        </table>
+
+                        <!-- Dropdown + Pagination on Same Row -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <!-- Entries Dropdown -->
+                            <div>
+                                <label for="itemsPerPage" class="me-2 fw-semibold">Show: </label>
+                                <select id="itemsPerPage" class="form-select d-inline-block w-auto">
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+
+                            <!-- Pagination -->
+                            <nav class="float-end mt-4" id="paginationControls" aria-label="Page navigation"></nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="footerAttribution" style="
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 14px;
+    color: #555;
+    background-color: #f8f9fa;
+  ">
+                    Made with ❤️ by <strong>De Blaze Media</strong>
+                </div>
+            </div>
+
+
+        </main>
+        <!--end page main-->
+
+
+        <!--start overlay-->
+        <div class="overlay nav-toggle-icon"></div>
+        <!--end overlay-->
+
+        <!--Start Back To Top Button-->
+        <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+        <!--End Back To Top Button-->
+
+        <!--start switcher-->
+        <!--end switcher-->
+
+    </div>
+    <!--end wrapper-->
+
+    <!--delete popup-->
+
+    <div id="deletePopupOverlay"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9998;">
+    </div>
+
+    <div id="deletePopup" style="
+  display: none;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  max-width: 90%;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  z-index: 9999;
+  text-align: center;
+">
+        <p style="font-weight: 600; color: #000;">Do you want to delete this Image?</p>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px;">
+            <button id="confirmDeleteBtn" class="btn btn-dark px-3">Yes</button>
+            <button id="cancelDeleteBtn" class="btn btn-outline-danger px-3">No</button>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap bundle JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!--plugins-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
+    <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="assets/js/pace.min.js"></script>
+    <!--app-->
+    <script src="assets/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tableBody = document.getElementById('propertyTableBody');
+
+            Sortable.create(tableBody, {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                handle: '.drag-handle', // Optional: add a drag icon
+                onEnd: function (evt) {
+                    console.log(`Moved row from ${evt.oldIndex} to ${evt.newIndex}`);
+                    // Optionally send new order to server here
+                }
+            });
+        });
+    </script>
+
+    <script>
+        let PROPERTIES_PER_PAGE = parseInt(localStorage.getItem('itemsPerPage')) || 10;
+        let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
+        let allProperties = [];
+
+        // 🔐 LOGIN HANDLER
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('inputEmailAddress').value;
+            const password = document.getElementById('inputChoosePassword').value;
+
+            try {
+                const res = await fetch('https://sainath-estate-backend-production.up.railway.app/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    localStorage.setItem('token', data.token);
+                    window.location.href = '/cms/index.html';
+                } else {
+                    alert(data.error || 'Invalid login credentials');
+                }
+            } catch (err) {
+                console.error('Login error:', err);
+                alert('Login failed. Please try again later.');
+            }
+        }
+
+        // 🛡 PROTECT DASHBOARD
+        function protectDashboard() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/cms/admin-signin.html';
+                return;
+            }
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.history.go(1);
+            };
+        }
+
+        // 📦 LOAD CREATIVES
+        async function loadGalleryItems() {
+            const token = localStorage.getItem('token');
+            if (!token) return window.location.href = '/cms/admin-signin.html';
+
+            try {
+                const res = await fetch('http://localhost:5000/api/creatives', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    allProperties = data;
+                    renderPage(currentPage);
+
+                    // ✅ Update breadcrumb and title
+                    const countEl = document.getElementById('propertyCountBreadcrumb');
+                    const totalCount = allProperties.length;
+                    if (countEl) countEl.textContent = `Gallery Items (${totalCount})`;
+                    document.title = `Gallery (${totalCount})`;
+
+                } else {
+                    alert(data.error || 'Failed to load gallery items');
+                }
+            } catch (err) {
+                console.error('Gallery load error:', err);
+                alert('Error loading gallery');
+            }
+        }
+
+
+        // 🎯 PAGINATION LOGIC
+        function renderPage(page) {
+            currentPage = page;
+            localStorage.setItem('currentPage', currentPage);
+            const startIndex = (page - 1) * PROPERTIES_PER_PAGE;
+            const endIndex = startIndex + PROPERTIES_PER_PAGE;
+            const paginatedData = allProperties.slice(startIndex, endIndex);
+            renderGalleryItems(paginatedData);
+            renderPaginationControls(allProperties.length);
+        }
+
+
+        // 🖼 RENDER PROPERTY TABLE
+        function renderGalleryItems(items) {
+            const tbody = document.getElementById('propertyTableBody');
+            tbody.innerHTML = '';
+
+            if (!Array.isArray(items) || items.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">No gallery items found</td></tr>';
+                return;
+            }
+
+            items.forEach(item => {
+                const imageUrl = item.imageUrl || 'https://via.placeholder.com/80x60?text=No+Image';
+                const createdDate = new Date(item.createdAt).toLocaleDateString('en-IN');
+                const title = item.title || '—';
+                const price = item.price ? `₹${item.price}` : '—';
+                const location = item.place || '—';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+      <td><img src="${imageUrl}" alt="Creative" width="60" class="img-thumbnail" style="cursor:pointer;" onclick="showImagePopup('${imageUrl}')"></td>
+      <td>${title}</td>
+      <td>${price}</td>
+      <td>${createdDate}</td>
+      <td>${location}</td>
+      <td class="text-end">
+        <a href="javascript:void(0)" class="text-success" onclick="editGallery('${item._id}')"><i class="bi bi-pencil-fill"></i></a>&nbsp;&nbsp;
+        <a href="javascript:void(0)" class="text-danger" onclick="deleteGallery('${item._id}')"><i class="bi bi-trash-fill"></i></a>
+      </td>`;
+                tbody.appendChild(row);
+            });
+        }
+
+
+        // 🧭 RENDER PAGINATION BUTTONS
+        function renderPaginationControls(totalItems) {
+            const paginationContainer = document.getElementById('paginationControls');
+            if (!paginationContainer) return;
+
+            paginationContainer.innerHTML = '';
+            const totalPages = Math.ceil(totalItems / PROPERTIES_PER_PAGE);
+            if (totalPages <= 1) return;
+
+            const ul = document.createElement('ul');
+            ul.className = 'pagination';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.className = 'page-item' + (i === currentPage ? ' active' : '');
+                li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                li.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    renderPage(i);
+                });
+                ul.appendChild(li);
+            }
+
+            paginationContainer.appendChild(ul);
+        }
+
+        // 📌 HANDLE "SHOW X PER PAGE" SELECT
+        document.addEventListener('DOMContentLoaded', () => {
+            const perPageSelect = document.getElementById('itemsPerPage');
+            if (perPageSelect) {
+                perPageSelect.value = PROPERTIES_PER_PAGE; // Set saved value
+                perPageSelect.addEventListener('change', (e) => {
+                    PROPERTIES_PER_PAGE = parseInt(e.target.value);
+                    localStorage.setItem('itemsPerPage', PROPERTIES_PER_PAGE); // Save new limit
+                    renderPage(currentPage);
+                });
+            }
+        });
+
+        // 🖼 POPUP IMAGE VIEW
+        function showImagePopup(url) {
+            const popup = document.createElement('div');
+            popup.style.cssText = `
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.7);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 9999; opacity: 0;
+      transition: opacity 0.3s ease;`;
+
+            const img = document.createElement('img');
+            img.src = url;
+            img.style.cssText = `
+      max-width: 90%; max-height: 90%;
+      border-radius: 8px; box-shadow: 0 0 20px #000;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;`;
+
+            popup.appendChild(img);
+            document.body.appendChild(popup);
+            void popup.offsetWidth;
+            popup.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+
+            popup.addEventListener('click', () => {
+                popup.style.opacity = '0';
+                img.style.transform = 'scale(0.95)';
+                setTimeout(() => popup.remove(), 300);
+            });
+        }
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.querySelector('form.form-body');
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleLogin);
+            }
+            if (document.getElementById('propertyTableBody')) {
+                protectDashboard();
+                loadGalleryItems();
+            }
+        });
+    </script>
+
+    <!--Search System Code -->
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/cms/admin-signin.html';
+        }
+    </script>
+    <script>
+        const searchInput = document.getElementById('propertySearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                const filtered = allProperties.filter(p =>
+                    p.title?.toLowerCase().includes(query) ||
+                    p.place?.toLowerCase().includes(query) // ✅ FIXED
+                );
+
+                renderGalleryItems(filtered);
+                renderPaginationControls(filtered.length);
+
+                // ✅ Update breadcrumb + title
+                const countEl = document.getElementById('propertyCountBreadcrumb');
+                if (countEl) {
+                    countEl.textContent = query
+                        ? `Search Results (${filtered.length})`
+                        : `Gallery Items (${allProperties.length})`;
+                }
+
+                document.title = query
+                    ? `Search Results (${filtered.length})`
+                    : `Gallery (${allProperties.length})`;
+            });
+        }
+
+
+    </script>
+    <!--Delete popup js-->
+    <script>
+        let deletePropertyId = null;
+
+        function showDeletePopup(propertyId) {
+            deletePropertyId = propertyId;
+            document.getElementById('deletePopup').style.display = 'block';
+            document.getElementById('deletePopupOverlay').style.display = 'block';
+        }
+
+        function hideDeletePopup() {
+            document.getElementById('deletePopup').style.display = 'none';
+            document.getElementById('deletePopupOverlay').style.display = 'none';
+            deletePropertyId = null;
+        }
+
+        // ✅ Handle Confirm Delete for Gallery
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+            if (!deletePropertyId) return;
+            const token = localStorage.getItem('token');
+            try {
+                const res = await fetch(`http://localhost:5000/api/creatives/${deletePropertyId}`, {
+                    method: 'DELETE',
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                const result = await res.json();
+                if (!res.ok) throw new Error(result.error || 'Delete failed');
+
+                allProperties = allProperties.filter(p => p._id !== deletePropertyId);
+                renderPage(currentPage); // ✅ keep using existing pagination logic
+                hideDeletePopup();
+            } catch (err) {
+                alert('Failed to delete. Please try again.');
+                console.error(err);
+            }
+        });
+
+        document.getElementById('cancelDeleteBtn').addEventListener('click', hideDeletePopup);
+        document.getElementById('deletePopupOverlay').addEventListener('click', hideDeletePopup);
+
+        // 📋 Copy Link Handler
+        function copyPropertyLink(link, element) {
+            navigator.clipboard.writeText(link).then(() => {
+                element.innerHTML = '<i class="bi bi-check-lg"></i>';
+                setTimeout(() => {
+                    element.innerHTML = '<i class="bi bi-clipboard"></i>';
+                }, 1000);
+            }).catch(() => {
+                alert('Failed to copy link');
+            });
+        }
+    </script>
+
+</body>
+
+</html>

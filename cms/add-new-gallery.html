@@ -180,22 +180,25 @@
                         </div>
                         <div class="card-body">
                             <div class="border p-3 rounded">
-                                <form class="row g-3">
+                                <form class="row g-3" action="/api/creatives" method="POST"
+                                    enctype="multipart/form-data">
                                     <div class="col-12">
                                         <label class="form-label">Image (Image Must be in 800x500)</label>
-                                        <input class="form-control" type="file">
+                                        <input class="form-control" type="file" name="image" required>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label">Image title</label>
-                                        <input type="text" class="form-control" placeholder="Image title">
+                                        <label class="form-label">Image Title</label>
+                                        <input type="text" class="form-control" name="title" placeholder="Image Title"
+                                            required>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label">Image Subtitle</label>
-                                        <input type="text" class="form-control" placeholder="Image Subtitle">
+                                        <input type="text" class="form-control" name="subTitle"
+                                            placeholder="Image Subtitle" required>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
+                                            <input class="form-check-input" type="checkbox" value="true" name="publish"
                                                 id="flexCheckDefault">
                                             <label class="form-check-label" for="flexCheckDefault">
                                                 Publish on website
@@ -211,6 +214,7 @@
                     </div>
                 </div>
             </div><!--end row-->
+
 
         </main>
         <!--end page main-->
@@ -242,8 +246,51 @@
     <script src="assets/js/pace.min.js"></script>
     <!--app-->
     <script src="assets/js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('uploadForm');  // Select the form
+            const submitButton = form.querySelector('button');  // Select the submit button
 
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();  // Prevent default form submission
 
+                // Create a new FormData object to hold the form data
+                const formData = new FormData(form);
+
+                // Disable the submit button to prevent multiple clicks
+                submitButton.disabled = true;
+                submitButton.textContent = "Submitting...";
+
+                try {
+                    // Send the form data using a POST request to the full URL
+                    const response = await fetch('http://localhost:5000/api/creatives', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    // Check if the response is OK (status code 2xx)
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('Success:', result);
+                        alert('Creative photo uploaded successfully!'); // You can customize this message
+                        form.reset(); // Reset form fields
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Error:', errorData);
+                        alert(errorData.error || 'Failed to upload creative image'); // Display error message
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error submitting the form. Please try again later.');
+                } finally {
+                    // Re-enable the submit button
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Submit Item";
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>

@@ -28,7 +28,7 @@
   <link href="assets/css/semi-dark.css" rel="stylesheet" />
   <link href="assets/css/header-colors.css" rel="stylesheet" />
 
-  <title>Sainath Estate | Buy Property in Mumbai</title>
+  <title>All Properties</title>
 
   <!-- Fonts Awesome CSS -->
   <link rel="stylesheet" type="text/css" href="/assets/vendors/fontawesome/css/all.min.css">
@@ -140,7 +140,7 @@
           </a>
         </li>
         <!-- <li>
-          <a href="add-new-gallery.html">
+          <a href="gallery.html">
             <div class="parent-icon"><i class="fa-solid fa-image"></i>
             </div>
             <div class="menu-title">Gallery Images</div>
@@ -171,11 +171,22 @@
           </nav>
         </div>
         <div class="ms-auto">
+          <button type="button" class="btn btn-outline-primary" onclick="openDateFilterModal()">See Properties by
+            Date</button>
+
           <div class="btn-group">
+            <!-- 👇 See Properties by Date -->
+
+            <!-- Add New Property -->
             <a href="add-new-property.html">
-              <button type="button" class="btn btn-primary">Add New Property</button></a>
+              <button type="button" class="btn btn-primary">Add New Property</button>
+            </a>
           </div>
+
+          <!-- Export Button -->
+          <button class="btn btn-outline-secondary" onclick="openExportModal()">Export Data</button>
         </div>
+
       </div>
       <!--end breadcrumb-->
 
@@ -185,7 +196,7 @@
             <table class="table align-middle table-striped">
               <thead class="text-muted small text-uppercase">
                 <tr>
-                  <th style="width: 15%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Image</th>
+                  <th style="width: 15%;">&nbsp;&nbsp;&nbsp;Image</th>
                   <th style="width: 25%;">Title</th>
                   <th style="width: 15%;">Price</th>
                   <th style="width: 15%;">Published Date</th>
@@ -364,9 +375,15 @@
 
           // ✅ Update breadcrumb with property count
           const countEl = document.getElementById('propertyCountBreadcrumb');
+          const totalCount = allProperties.length;
+
           if (countEl) {
-            countEl.textContent = `Total Properties (${allProperties.length})`;
+            countEl.textContent = `Total Properties (${totalCount})`;
           }
+
+          // ✅ Update page title with property count
+          document.title = `Total Properties (${totalCount})`;
+
         } else {
           alert(data.error || 'Failed to load properties');
         }
@@ -375,6 +392,7 @@
         alert('Error loading property list');
       }
     }
+
 
     // 🎯 PAGINATION LOGIC
     function renderPage(page) {
@@ -600,6 +618,174 @@
 
   </script>
 
+  <!-- Date Filter Modal -->
+  <div id="dateFilterModal" class="modal"
+    style="display:none; position:fixed; z-index:10000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+    <div style="background:#fff; padding:20px; border-radius:10px; width:300px; text-align:center;">
+      <h5>Filter by Date</h5>
+      <select id="filterDateRange" class="form-select my-3">
+        <option value="all">All Properties</option>
+        <option value="7">Last 7 Days</option>
+        <option value="30">Last 1 Month</option>
+        <option value="90">Last 3 Months</option>
+        <option value="custom">Custom Range</option>
+      </select>
+      <div id="customFilterDates" style="display:none;">
+        <input type="date" id="filterStartDate" class="form-control mb-2" />
+        <input type="date" id="filterEndDate" class="form-control mb-2" />
+      </div>
+      <button class="btn btn-primary" onclick="applyDateFilter()">Apply Filter</button>
+      <button class="btn btn-link mt-2" onclick="closeDateFilterModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    function openDateFilterModal() {
+      document.getElementById('dateFilterModal').style.display = 'flex';
+    }
+
+    function closeDateFilterModal() {
+      document.getElementById('dateFilterModal').style.display = 'none';
+    }
+
+    document.getElementById('filterDateRange').addEventListener('change', function () {
+      const val = this.value;
+      document.getElementById('customFilterDates').style.display = val === 'custom' ? 'block' : 'none';
+    });
+
+    function applyDateFilter() {
+      const selectedRange = document.getElementById('filterDateRange').value;
+      let filtered = [...allProperties];
+      const now = new Date();
+
+      let startDate = null, endDate = null;
+
+      if (selectedRange === '7') {
+        startDate = new Date(now.setDate(now.getDate() - 7));
+      } else if (selectedRange === '30') {
+        startDate = new Date(now.setMonth(now.getMonth() - 1));
+      } else if (selectedRange === '90') {
+        startDate = new Date(now.setMonth(now.getMonth() - 3));
+      } else if (selectedRange === 'custom') {
+        startDate = new Date(document.getElementById('filterStartDate').value);
+        endDate = new Date(document.getElementById('filterEndDate').value);
+        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+          alert("Please select valid dates");
+          return;
+        }
+      }
+
+      // Filter the properties by createdAt
+      filtered = filtered.filter(item => {
+        const created = new Date(item.createdAt);
+        if (startDate && endDate) {
+          return created >= startDate && created <= endDate;
+        } else if (startDate) {
+          return created >= startDate;
+        }
+        return true;
+      });
+
+      renderProperties(filtered);
+      renderPaginationControls(filtered.length);
+
+      const countEl = document.getElementById('propertyCountBreadcrumb');
+      if (countEl) {
+        countEl.textContent = selectedRange !== 'all'
+          ? `Filtered Properties (${filtered.length})`
+          : `Total Properties (${filtered.length})`;
+      }
+
+      closeDateFilterModal();
+    }
+  </script>
+
+
+
+  <!-- Excel  Export Modal -->
+  <div id="exportModal" class="modal"
+    style="display:none; position:fixed; z-index:10000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+    <div style="background:#fff; padding:20px; border-radius:10px; width:300px; text-align:center;">
+      <h5>Select Date Range</h5>
+      <select id="exportDateRange" class="form-select my-3">
+        <option value="all">All Data</option>
+        <option value="7">Last 7 Days</option>
+        <option value="30">Last 1 Month</option>
+        <option value="90">Last 3 Months</option>
+        <option value="custom">Custom Date</option>
+      </select>
+      <div id="customDateInputs" style="display:none;">
+        <input type="date" id="startDate" class="form-control mb-2" />
+        <input type="date" id="endDate" class="form-control mb-2" />
+      </div>
+      <button class="btn btn-success" onclick="exportToExcel()">Download Excel</button>
+      <button class="btn btn-link mt-2" onclick="closeExportModal()">Cancel</button>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <script>
+    function openExportModal() {
+      document.getElementById('exportModal').style.display = 'flex';
+    }
+
+    function closeExportModal() {
+      document.getElementById('exportModal').style.display = 'none';
+    }
+
+    document.getElementById('exportDateRange').addEventListener('change', function () {
+      const val = this.value;
+      document.getElementById('customDateInputs').style.display = val === 'custom' ? 'block' : 'none';
+    });
+
+    function exportToExcel() {
+      let selectedRange = document.getElementById('exportDateRange').value;
+      let filteredData = [...allProperties];
+
+      const now = new Date();
+      let startDate = null, endDate = null;
+
+      if (selectedRange === '7') {
+        startDate = new Date(now.setDate(now.getDate() - 7));
+      } else if (selectedRange === '30') {
+        startDate = new Date(now.setMonth(now.getMonth() - 1));
+      } else if (selectedRange === '90') {
+        startDate = new Date(now.setMonth(now.getMonth() - 3));
+      } else if (selectedRange === 'custom') {
+        startDate = new Date(document.getElementById('startDate').value);
+        endDate = new Date(document.getElementById('endDate').value);
+        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+          alert("Please select valid dates");
+          return;
+        }
+      }
+
+      filteredData = filteredData.filter(item => {
+        const createdAt = new Date(item.createdAt);
+        if (startDate && endDate) {
+          return createdAt >= startDate && createdAt <= endDate;
+        } else if (startDate) {
+          return createdAt >= startDate;
+        }
+        return true;
+      });
+
+      const excelData = filteredData.map(item => ({
+        Title: item.title,
+        Price: item.formattedPrice || `₹${item.price?.toLocaleString('en-IN')}`,
+        'Published Date': new Date(item.createdAt).toLocaleDateString('en-IN'),
+        Location: item.location || '—',
+        Link: `https://sainathestate.com/property-details.html?id=${item._id}`
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(excelData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Properties');
+      XLSX.writeFile(wb, 'property-data.xlsx');
+
+      closeExportModal();
+    }
+  </script>
 
 
 </body>
