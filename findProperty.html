@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Sainath Estate Property Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #D1D1D1
+        }
+
+        .map-section {
+            padding: 40px 20px;
+            text-align: center
+        }
+
+        .map-section h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 48px;
+            line-height: 64px;
+            color: #fff;
+            margin-bottom: 8px
+        }
+
+        .map-section p {
+            font-size: 18px;
+            line-height: 32px;
+            color: #D1D1D1
+        }
+
+        #map {
+            width: 100%;
+            height: 80vh;
+            margin-top: 30px;
+            border-radius: 12px;
+            z-index: 1
+        }
+
+        .property-card {
+            width: 260px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .3)
+        }
+
+        .property-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #eee
+        }
+
+        .property-card-body {
+            padding: 10px
+        }
+
+        .property-card-body h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            margin: 0 0 6px;
+            color: #000
+        }
+
+        .property-card-body p {
+            font-size: 14px;
+            margin: 0;
+            color: #333
+        }
+
+        .property-card-body a {
+            color: #000;
+            padding: 10px 16px;
+            font-family: "Inter", sans-serif
+        }
+
+        .popup-button {
+            background: #C89A55;
+            padding: 6px 12px;
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px
+        }
+    </style>
+</head>
+
+<body>
+    <section class="map-section">
+        <h1>Find Your Next Property</h1>
+        <p>Explore exclusive properties and discover your next home with our interactive map.</p>
+        <div id="map"></div>
+    </section>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const API_BASE = 'https://sainath-estate-backend-production.up.railway.app';
+        const LIST_URL = API_BASE + '/api/properties/view-all';
+        const UPLOADS_PRIMARY = 'https://sainathestate.in/uploads/';
+        const UPLOADS_FALLBACK = API_BASE + '/uploads/';
+
+        // Map initialization
+        const map = L.map('map').setView([19.1294, 72.8397], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Brand pin icon
+        const brandIcon = L.icon({
+            iconUrl: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="42" viewBox="0 0 36 42">
+          <path d="M18 0c9.389 0 17 7.611 17 17 0 12.75-17 25-17 25S1 29.75 1 17C1 7.611 8.611 0 18 0z" fill="#C89A55"/>
+          <path d="M10 20.5l8-6 8 6V28h-5v-5h-6v5h-5v-7.5z" fill="#000"/>
+          <circle cx="18" cy="17" r="16.2" fill="none" stroke="#000" stroke-opacity=".2"/>
+        </svg>`),
+            iconSize: [36, 42],
+            iconAnchor: [18, 40],
+            popupAnchor: [0, -34]
+        });
+
+        // Locality centroids (fallback only)
+        const LOC = {
+            'andheri west': [19.1294, 72.8397], 'andheri west mumbai': [19.1294, 72.8397], 'andheri': [19.1197, 72.8468],
+            'lokhandwala': [19.1413, 72.8266], 'lokhandwala complex': [19.1413, 72.8266],
+            'four bungalows': [19.1299, 72.8269], 'four bunglows': [19.1299, 72.8269], 'four bunglow': [19.1299, 72.8269],
+            'seven bungalows': [19.1377, 72.8155], 'versova': [19.1341, 72.8237], 'aram nagar': [19.1396, 72.8237], 'yari road': [19.1357, 72.8222], 'swami samarth nagar': [19.1500, 72.8280],
+            'dn nagar': [19.1298, 72.8428], 'd.n. nagar': [19.1298, 72.8428], 'd.n.nagar': [19.1298, 72.8428],
+            'azad nagar': [19.1292, 72.8417], 'veera desai': [19.1309, 72.8366], 'veera desai industrial estate': [19.1309, 72.8366],
+            'jp road': [19.1247, 72.8338], 'gilbert hill': [19.1239, 72.8406], 'sv patel nagar': [19.1370, 72.8410], 's v patel nagar': [19.1370, 72.8410],
+            'amboli': [19.1359, 72.8427], 'bharucha baug': [19.1350, 72.8450], 'munshi nagar': [19.1400, 72.8460],
+            'model town': [19.1425, 72.8405], 'suresh nagar': [19.1370, 72.8320], 'shastri nagar': [19.1515, 72.8397], 'zalawad nagar': [19.1420, 72.8430], 'bhudargarh colony': [19.1350, 72.8400],
+            'oshiwara': [19.1500, 72.8349], 'jogeshwari west': [19.1440, 72.8420], 'adarsh nagar': [19.1550, 72.8410], 'adarsh nagar jogeshwari': [19.1550, 72.8410],
+            'mudran press colony': [19.1228, 72.8292], 'mhada colony': [19.1200, 72.8300], 'tepgaon': [19.1250, 72.8450], 'caesar road': [19.1307, 72.8429], 'jp rd': [19.1247, 72.8338]
+        };
+
+        // Geocoding cache setup
+        const LS_KEY = 'geoCache_v1';
+        const geoCache = (() => {
+            try {
+                return JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+            } catch {
+                return {};
+            }
+        })();
+        const saveGeoCache = () => {
+            try {
+                localStorage.setItem(LS_KEY, JSON.stringify(geoCache));
+            } catch { }
+        };
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        async function geocode(location) {
+            const key = location.trim();
+            if (geoCache[key]) return geoCache[key];
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(key + ', Mumbai, Maharashtra, India')}`;
+            const r = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+            if (!r.ok) return null;
+            const data = await r.json();
+            const coords = data?.[0] ? [parseFloat(data[0].lat), parseFloat(data[0].lon)] : null;
+            if (coords) {
+                geoCache[key] = coords;
+                saveGeoCache();
+            }
+            return coords;
+        }
+
+        // Utility functions moved outside the main async block
+        const norm = (raw = '') => raw.toLowerCase().replace(/\s*,\s*mumbai.*$|\s*,\s*maharashtra.*$|\s*,\s*india.*$|\s*,\s*andheri(\s*west)?/g, '').replace(/\b(?:d\.?n\.?\s*nagar)\b/g, 'd.n. nagar').replace(/\b(?:s\.?v\.?\s*patel\s*nagar)\b/g, 'sv patel nagar').replace(/\s+/g, ' ').trim();
+        const pickImageFilename = p => p.slider_image || (Array.isArray(p.propertyBanner) && p.propertyBanner[0] ? p.propertyBanner[0] : null);
+        const buildImageUrl = (file, isPrimary) => file ? (isPrimary ? UPLOADS_PRIMARY : UPLOADS_FALLBACK) + encodeURIComponent(file) : 'https://via.placeholder.com/240x160?text=No+Image';
+
+        function popupHtml(p) {
+            const file = pickImageFilename(p);
+            const primary = buildImageUrl(file, true);
+            const fallback = buildImageUrl(file, false);
+            const price = p.formattedPrice || (p.price ? '₹' + Number(p.price).toLocaleString('en-IN') : '₹--');
+            const type = p.type || 'Residential';
+            const onErr = file ? `this.onerror=null;this.src='${fallback}';` : `this.onerror=null;this.src='https://via.placeholder.com/240x160?text=No+Image';`;
+            return `
+            <div class="property-card">
+              <img src="${primary}" onerror="${onErr}" loading="lazy" alt="${p.title || 'Property'}">
+              <div class="property-card-body">
+                <h4>${p.title || 'Property'}</h4>
+                <p>${type} • ${price}</p>
+                <a href="property-details.html?id=${p._id}" class="popup-button" target="_blank" rel="noopener">View Details</a>
+              </div>
+            </div>`;
+        }
+
+        // Main execution logic
+        (async () => {
+            try {
+                const res = await fetch(LIST_URL);
+                if (!res.ok) throw new Error('Failed to fetch properties.');
+                const properties = await res.json();
+
+                const bounds = L.latLngBounds();
+                const geocodePromises = [];
+
+                for (const p of properties) {
+                    // Determine coordinates using a priority queue
+                    let coords = null;
+                    if (Number.isFinite(p.latitude) && Number.isFinite(p.longitude)) {
+                        coords = [p.latitude, p.longitude];
+                    } else {
+                        const key = norm(p.location || '');
+                        coords = LOC[key] || Object.keys(LOC).find(k => key.includes(k)) ? LOC[Object.keys(LOC).find(k => key.includes(k))] : null;
+                    }
+
+                    // If coordinates are found, plot immediately
+                    if (coords) {
+                        L.marker(coords, { icon: brandIcon }).addTo(map).bindPopup(popupHtml(p), { maxWidth: 360 });
+                        bounds.extend(coords);
+                    } else if (p.location) {
+                        // Queue up geocoding for unmatched locations
+                        geocodePromises.push((async () => {
+                            const geocodedCoords = await geocode(p.location);
+                            if (geocodedCoords) {
+                                L.marker(geocodedCoords, { icon: brandIcon }).addTo(map).bindPopup(popupHtml(p), { maxWidth: 360 });
+                                bounds.extend(geocodedCoords);
+                            }
+                        })());
+                    }
+                }
+
+                // Process geocoding promises in a controlled manner
+                if (geocodePromises.length) {
+                    await Promise.all(geocodePromises);
+                }
+
+                // Fit the map to the bounds of all plotted markers
+                if (bounds.isValid()) {
+                    map.fitBounds(bounds.pad(0.15));
+                }
+            } catch (error) {
+                console.error('Error fetching or plotting properties:', error);
+                // Handle error gracefully, maybe show a message on the map
+            }
+        })();
+    </script>
+</body>
+
+</html>

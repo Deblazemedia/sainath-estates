@@ -86,7 +86,7 @@
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
                                 data-bs-toggle="dropdown">
                                 <div class="user-setting d-flex align-items-center gap-1">
-                                    <img src="assets/images/avatars/avatar-1.png" class="user-img" alt="">
+                                    <img src="assets/images/avatars/avatar-1.png" class="user-img" loading="lazy" alt="">
                                     <div class="user-name d-none d-sm-block">Bunty</div>
                                 </div>
                             </a>
@@ -94,7 +94,7 @@
                                 <li>
                                     <a class="dropdown-item" href="#">
                                         <div class="d-flex align-items-center">
-                                            <img src="assets/images/avatars/avatar-1.png" alt="" class="rounded-circle"
+                                            <img src="assets/images/avatars/avatar-1.png" loading="lazy" alt="" class="rounded-circle"
                                                 width="60" height="60">
                                             <div class="ms-3">
                                                 <h6 class="mb-0 dropdown-user-name">Bunty</h6>
@@ -128,7 +128,7 @@
         <aside class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
-                    <img src="/assets/img/logo_2.png" class="logo-icon" alt="logo icon">
+                    <img src="/assets/img/logo_2.png" class="logo-icon" loading="lazy" alt="logo icon">
                 </div>
 
                 <div class="toggle-icon ms-auto"><i class="bi bi-chevron-double-left"></i>
@@ -410,7 +410,7 @@
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-      <td><img src="${imageUrl}" alt="Creative" width="60" class="img-thumbnail" style="cursor:pointer;" onclick="showImagePopup('${imageUrl}')"></td>
+      <td><img src="${imageUrl}" loading="lazy" alt="Creative" width="60" class="img-thumbnail" style="cursor:pointer;" onclick="showImagePopup('${imageUrl}')"></td>
       <td>${title}</td>
       <td>${price}</td>
       <td>${createdDate}</td>
