@@ -830,27 +830,37 @@ Property Page Area
                 }
 
                 // 6. Location Info
-                document.getElementById('propertyAddress').textContent = property.location;
-                document.getElementById('propertyPincode').textContent = "400001";
-                document.getElementById('locationThumbnail').src =
-                    `https://sainath-estate-backend-production.up.railway.app/uploads/${property.slider_image || property.gallery?.[0] || 'default.jpg'}`;
-                document.getElementById('propertyMapIframe').src =
-                    `https://maps.google.com/maps?q=${encodeURIComponent(property.location)}&output=embed`;
+                const addrEl = document.getElementById('propertyAddress');
+                if (addrEl) addrEl.textContent = property.location || 'Not available';
 
+                const pincodeEl = document.getElementById('propertyPincode');
+                if (pincodeEl) pincodeEl.textContent = "400001";
+
+                const thumbEl = document.getElementById('locationThumbnail');
+                if (thumbEl) {
+                    const imgFile = property.slider_image || property.gallery?.[0] || 'default.jpg';
+                    thumbEl.src = `https://sainath-estate-backend-production.up.railway.app/uploads/${imgFile}`;
+                    thumbEl.alt = `${property.title || 'Property'} location photo`;
+                }
+
+                const mapIframe = document.getElementById('propertyMapIframe');
+                if (mapIframe && property.location) {
+                    mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(property.location)}&output=embed`;
+                }
 
                 // 6.1 RERA Number + QR Code
                 if (property.reraNumber) {
                     const reraText = document.getElementById('reraNumberText');
+                    if (reraText) reraText.textContent = property.reraNumber;
+
                     const reraCanvas = document.getElementById('reraQRCodeCanvas');
-
-                    reraText.textContent = property.reraNumber;
-
-                    // Generate QR Code using QRious
-                    new QRious({
-                        element: reraCanvas,
-                        value: property.reraNumber,
-                        size: 120
-                    });
+                    if (reraCanvas && window.QRious) {
+                        new QRious({
+                            element: reraCanvas,
+                            value: property.reraNumber,
+                            size: 120
+                        });
+                    }
                 }
 
 
