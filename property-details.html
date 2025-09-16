@@ -67,6 +67,49 @@
     <!-- Fonts Awesome CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/vendors/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Minimal responsive grid for the 3-card layout */
+        #similar-property-sec .similar-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+        }
+
+        /* Force all text inside this section to #222222 */
+        #similar-property-sec,
+        #similar-property-sec * {
+            color: #222222 !important;
+        }
+
+        @media (min-width: 768px) {
+            #similar-property-sec .similar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            #similar-property-sec .similar-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Ensure cards stretch nicely inside the grid */
+        #similar-property-sec .property-card7 {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #similar-property-sec .property-card-thumb img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        #similar-property-sec .property-card-details {
+            margin-top: auto;
+        }
+    </style>
 
 </head>
 
@@ -427,12 +470,7 @@ Property Page Area
                                         <a href="https://maharera.mahaonline.gov.in/"
                                             target="_blank">https://maharera.mahaonline.gov.in/</a>
                                     </p>
-                                </div>
-
-
-
-
-                                <br>
+                                </div><br>
                                 <!-- <h3 class="page-title mt-50 mb-30">Property Video</h3>
                                 <div class="video-box2 mb-30" id="propertyVideoSection">
                                     <img id="videoThumbnail" src="" alt="img">
@@ -489,11 +527,34 @@ Property Page Area
                             </div>
                         </aside>
                     </div>
+                    <div class="space-reducer-3 "></div>
+                    <!-- Similar Properties (3-up) -->
+                    <section class="space overflow-hidden" id="similar-property-sec">
+                        <div class="container th-container2">
+                            <div class="title-area text-center">
+                                <h2 class="sec-title text-theme">Similar Properties</h2>
+                                <p class="sec-text text-light">Handpicked listings you might also like.</p>
+                            </div>
+
+                            <div id="similarPropertyLoader" class="section-data-loader" style="margin: 40px auto;">
+                                Loading...</div>
+
+                            <div class="similar-grid" id="similarPropertyWrapper">
+                                <!-- 3 dynamic property cards will be injected here -->
+                            </div>
+
+                            <div class="btn-wrap justify-content-center" style="margin-top:32px">
+                                <a href="property.html" class="th-btn style5 th-btn-icon">View All Properties</a>
+                            </div>
+                        </div>
+                    </section>
+                    
                 </div>
             </div>
         </section>
     </div>
     <div class="space-reducer"></div>
+
     <!-- Elfsight WhatsApp Chat | Untitled WhatsApp Chat -->
     <!-- <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-b17253ea-de98-48ac-82c9-3d6caa871d6f" data-elfsight-app-lazy></div> -->
@@ -976,6 +1037,78 @@ Property Page Area
             document.getElementById('twitterImage').setAttribute('content', imageUrl);
         }
 
+    </script>
+    <!-- Code for Similar Properties -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const baseUrl = 'https://sainath-estate-backend-production.up.railway.app';
+            const wrapper = document.getElementById('similarPropertyWrapper');
+            const loader = document.getElementById('similarPropertyLoader');
+
+            if (!wrapper || !loader) return;
+
+            loader.style.display = 'block';
+            wrapper.style.display = 'none';
+
+            const timestamp = Date.now();
+
+            fetch(`${baseUrl}/api/properties/recent?_=${timestamp}`)
+                .then(res => res.json())
+                .then(data => {
+                    wrapper.innerHTML = '';
+
+                    // --- Pick 3 random unique properties ---
+                    const shuffled = data.sort(() => 0.5 - Math.random());
+                    const randomThree = shuffled.slice(0, 3);
+
+                    randomThree.forEach(property => {
+                        const imageUrl = property.slider_image
+                            ? `${baseUrl}/uploads/${encodeURIComponent(property.slider_image)}?_=${timestamp}`
+                            : 'assets/img/default.jpg';
+
+                        const type = property.type?.trim() || '';
+                        const price = Number(property.price) || 0;
+                        const shortPrice = property.formattedPrice || (price
+                            ? `₹${(price / 10000000).toFixed(2)} Cr`
+                            : 'Price on request');
+
+                        const displayPrice = (property.listingType === 'buy' && type)
+                            ? `${shortPrice} for ${type}`
+                            : shortPrice;
+
+                        const card = `
+            <div class="property-card7">
+              <div class="property-card-thumb img-shine">
+                <img src="${imageUrl}" loading="lazy" alt="${property.title}">
+              </div>
+              <div class="property-card-meta">
+                <span><i class="fa-solid fa-house"></i> ${type}</span>
+              </div>
+              <div class="property-card-details">
+                <div class="media-left">
+                  <a href="property-details.html?id=${property._id}">
+                    <h4 class="property-card-title">${property.title}</h4>
+                    <h5 class="property-card-price">${displayPrice}</h5>
+                    <p class="property-card-location">${property.location || ''}</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+
+                        wrapper.insertAdjacentHTML('beforeend', card);
+                    });
+
+                    loader.style.display = 'none';
+                    wrapper.style.display = 'grid';
+                })
+                .catch(err => {
+                    loader.style.display = 'none';
+                    console.error('Error fetching similar properties:', err);
+                    wrapper.innerHTML = '<p>Unable to load similar properties at the moment.</p>';
+                    wrapper.style.display = 'block';
+                });
+        });
     </script>
 </body>
 
