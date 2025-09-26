@@ -964,7 +964,7 @@ Property Page Area
                 const propertyTitle = document.getElementById("propertyTitle")?.textContent?.trim() || "";
 
                 try {
-                    const res = await fetch("https://sainath-estate-backend-production.up.railway.app/api/contact", {
+                    const res = await fetch("http://localhost:5000/api/contact", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
