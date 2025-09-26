@@ -29,7 +29,7 @@
   <link href="assets/css/semi-dark.css" rel="stylesheet" />
   <link href="assets/css/header-colors.css" rel="stylesheet" />
 
-  <title>Sainath Estate | Buy Property in Mumbai</title>
+  <title>Add New Property</title>
 
   <!-- Fonts Awesome CSS -->
   <link rel="stylesheet" type="text/css" href="/assets/vendors/fontawesome/css/all.min.css">
@@ -87,8 +87,8 @@
                 <li>
                   <a class="dropdown-item" href="#">
                     <div class="d-flex align-items-center">
-                      <img src="assets/images/avatars/avatar-1.png" loading="lazy" alt="" class="rounded-circle" width="60"
-                        height="60">
+                      <img src="assets/images/avatars/avatar-1.png" loading="lazy" alt="" class="rounded-circle"
+                        width="60" height="60">
                       <div class="ms-3">
                         <h6 class="mb-0 dropdown-user-name">Bunty</h6>
                         <small class="mb-0 dropdown-user-designation text-secondary">Admin</small>
@@ -317,9 +317,10 @@
                 <div id="actionRow" class="col-12 row g-3">
                   <!-- Buttons will be inserted by JS -->
                 </div>
-                <div id="submitMessage" class="mt-2 text-success fw-bold" style="display: none;">
+
+                <!-- <div id="submitMessage" class="mt-2 text-success fw-bold" style="display: none;">
                   ✅ Property Added Successfully!
-                </div>
+                </div> -->
 
               </form>
 
@@ -417,6 +418,8 @@
       previewImageWithLoader('sliderImageInput', 'sliderPreview', 'sliderLoading');
       previewImageWithLoader('bannerImageInput', 'bannerPreview', 'bannerLoading');
 
+
+
       // 🟡 Load property data (for update)
       if (propertyId && token) {
         try {
@@ -492,6 +495,99 @@
         }
 
       }
+
+      document.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const submitBtn = document.getElementById("submitBtn");
+
+        if (!submitBtn) return;
+
+        // 1) Submitting...
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Submitting...";
+
+        // TODO: replace with your real API call
+        await new Promise((r) => setTimeout(r, 1500));
+
+        // 2) Submitted (green)
+        submitBtn.classList.remove("btn-dark");
+        submitBtn.classList.add("btn-success");
+        submitBtn.innerText = "Submitted";
+
+        // 3) Clear form UI thoroughly (not just inputs)
+        hardClearFormUI(form);
+
+        // show success message briefly (optional)
+        const msg = document.getElementById("submitMessage");
+        if (msg) msg.style.display = "block";
+
+        // 4) Hard refresh after 1s (cache-busted)
+        setTimeout(() => {
+          hardReload();
+        }, 1000);
+      });
+
+      /** Clears inputs AND common custom UI (file previews, contenteditable, WYSIWYG) */
+      function hardClearFormUI(form) {
+        // Basic inputs
+        form.reset();
+
+        // Clear file inputs explicitly (form.reset() can leave them in some browsers)
+        form.querySelectorAll('input[type="file"]').forEach((input) => (input.value = ""));
+
+        // Clear image previews (common selectors; tweak to match your markup)
+        // Example: <img id="imagePreview"> or any element with [data-preview="image"]
+        const previews = document.querySelectorAll("#imagePreview, [data-preview='image'], .image-preview img");
+        previews.forEach((img) => {
+          // Revoke object URL if you stored it
+          if (img.dataset.objectUrl) {
+            try { URL.revokeObjectURL(img.dataset.objectUrl); } catch { }
+            delete img.dataset.objectUrl;
+          }
+          // Hide/clear the preview
+          if ("src" in img) img.src = "";
+          img.style.display = "none";
+        });
+
+        // Clear description in common cases
+
+        // 1) Plain textarea
+        const descTextarea = document.getElementById("description") || form.querySelector("textarea[name='description']");
+        if (descTextarea) descTextarea.value = "";
+
+        // 2) contenteditable container
+        const descEditable = document.querySelector("[contenteditable][data-role='description'], [contenteditable].description");
+        if (descEditable) descEditable.innerHTML = "";
+
+        // 3) WYSIWYG editors (uncomment the ones you use)
+        // TinyMCE
+        if (window.tinymce && tinymce.activeEditor) {
+          tinymce.activeEditor.setContent("");
+        }
+        // Quill (assumes you saved instance as window.descriptionQuill)
+        if (window.Quill && window.descriptionQuill) {
+          window.descriptionQuill.setText("");
+        }
+        // CKEditor 5 (assumes instance saved on window.descriptionEditor)
+        if (window.descriptionEditor && typeof window.descriptionEditor.setData === "function") {
+          window.descriptionEditor.setData("");
+        }
+      }
+
+      /** Forces a true reload (bypass cache & BFCache) by replacing URL with a cache-busting param */
+      function hardReload() {
+        try {
+          const url = new URL(window.location.href.split("#")[0]); // drop hash
+          url.searchParams.set("_r", Date.now().toString());       // cache-buster
+          window.location.replace(url.toString());                  // replace (no history entry)
+        } catch {
+          // Fallbacks
+          window.location.reload();                                 // may use cache
+        }
+      }
+
+
 
       // 📨 Submit Handler (Add or Update)
       const form = document.getElementById('propertyForm') || document.querySelector('form');
@@ -580,9 +676,15 @@
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         })
-          .then(res => res.json())
+          .then(res => {
+            if (!res.ok) {
+              throw new Error('Failed to delete');
+            }
+            return res.json();
+          })
           .then(() => {
-            window.location.href = '/cms/index.html';
+            // Refresh the page after successful delete
+            location.reload();
           })
           .catch(err => {
             console.error('Delete error:', err);
@@ -590,6 +692,7 @@
           });
       }
     }
+
 
     function showImagePopup(url) {
       const popup = document.createElement('div');
