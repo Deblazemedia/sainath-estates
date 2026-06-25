@@ -354,7 +354,7 @@
             if (!token) return window.location.href = '/cms/admin-signin.html';
 
             try {
-                const res = await fetch('http://localhost:5000/api/creatives', {
+                const res = await fetch('https://sainath-estate-backend-production.up.railway.app/api/creatives', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -565,7 +565,7 @@
             if (!deletePropertyId) return;
             const token = localStorage.getItem('token');
             try {
-                const res = await fetch(`http://localhost:5000/api/creatives/${deletePropertyId}`, {
+                const res = await fetch(`https://sainath-estate-backend-production.up.railway.app/api/creatives/${deletePropertyId}`, {
                     method: 'DELETE',
                     headers: { Authorization: `Bearer ${token}` }
                 });

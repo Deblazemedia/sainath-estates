@@ -43846,3 +43846,36 @@ video {
     display: block !important;
   }
 }
+
+.privacy-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.privacy-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: #B59410;
+  /* Gold */
+  cursor: pointer;
+}
+
+.privacy-checkbox label {
+  color: #555;
+  margin: 0;
+  cursor: pointer;
+}
+
+.privacy-checkbox a {
+  color: #B59410;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.privacy-checkbox a:hover {
+  text-decoration: underline;
+}
