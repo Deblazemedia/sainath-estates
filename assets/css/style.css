@@ -43860,22 +43860,29 @@ video {
   height: 18px;
   margin-top: 3px;
   accent-color: #B59410;
-  /* Gold */
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .privacy-checkbox label {
-  color: #555;
   margin: 0;
+  color: #555;
   cursor: pointer;
 }
 
 .privacy-checkbox a {
   color: #B59410;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.privacy-checkbox a:hover {
+.privacy-checkbox a {
   text-decoration: underline;
+}
+
+#privacyError {
+  display: none;
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 8px;
 }
