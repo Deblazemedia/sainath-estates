@@ -43876,13 +43876,16 @@ video {
   font-weight: 600;
 }
 
-.privacy-checkbox a {
-  text-decoration: underline;
-}
+
 
 #privacyError {
   display: none;
   color: #dc3545;
   font-size: 14px;
   margin-top: 8px;
+}
+
+.links > a{
+  color: #D3A258;
+  text-decoration: underline;
 }
